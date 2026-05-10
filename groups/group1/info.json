@@ -1,0 +1,78 @@
+{
+  "group": "Group 1",
+  "members": ["Rolan Jero Pinton", "Vonn Philip Salve", "Princess Abigail Talidano"],
+  "download": "project.zip",
+  "labacts": [
+    {
+      "name": "Division Algorithm",
+      "file": "DivAlgo.java",
+      "screenshot": "screenshots/DivAlgo.png",
+      "description": "Computes the quotient and remainder for two integers using the division algorithm.",
+      "inputs": [
+        { "label": "Dividend", "placeholder": "integer, e.g. 10" },
+        { "label": "Divisor", "placeholder": "non-zero integer, e.g. 3" }
+      ]
+    },
+    {
+      "name": "Palindrome",
+      "file": "Palindrome.java",
+      "screenshot": "screenshots/Palindrome.png",
+      "description": "Checks whether the provided string reads the same forward and backward.",
+      "inputs": [
+        { "label": "String", "placeholder": "any string, e.g. racecar" }
+      ]
+    },
+    {
+      "name": "Euclidean",
+      "file": "Euclidean.java",
+      "screenshot": "screenshots/Euclidean.png",
+      "description": "Finds the greatest common divisor of two positive integers using the Euclidean algorithm.",
+      "inputs": [
+        { "label": "First positive integer", "placeholder": "e.g. 48" },
+        { "label": "Second positive integer", "placeholder": "e.g. 18" }
+      ]
+    },
+    {
+      "name": "Collatz Sequence",
+      "file": "Collatz.java",
+      "screenshot": "screenshots/Collatz.png",
+      "description": "Generates the Collatz sequence for a positive integer greater than 0.",
+      "inputs": [
+        { "label": "Starting number", "placeholder": "positive integer greater than 0, e.g. 12" }
+      ]
+    },
+    {
+      "name": "Recursion",
+      "type": "group",
+      "sublabacts": [
+        {
+          "name": "Fibonacci",
+          "file": "Fibonacci.java",
+          "screenshot": "screenshots/Fibonacci.png",
+          "description": "Fibonacci sequence recursively.",
+          "inputs": [
+            { "label": "Number of terms", "placeholder": "positive integer, e.g. 7" }
+          ]
+        },
+        {
+          "name": "Lucas",
+          "file": "Lucas.java",
+          "screenshot": "screenshots/Lucas.png",
+          "description": "Lucas sequence recursively.",
+          "inputs": [
+            { "label": "Number of terms", "placeholder": "positive integer, e.g. 7" }
+          ]
+        },
+        {
+          "name": "Tribonacci",
+          "file": "Tribonacci.java",
+          "screenshot": "screenshots/Tribonacci.png",
+          "description": "Tribonacci sequence recursively.",
+          "inputs": [
+            { "label": "Number of terms", "placeholder": "positive integer, e.g. 7" }
+          ]
+        }
+      ]
+    }
+  ]
+}
