@@ -8,9 +8,15 @@ const state = {
   currentSubLabIndex: 0,
   currentLab: null,
   currentCode: "",
+  sidebarOpen: true,
 };
 
 const elements = {
+  sidebar: document.getElementById("sidebar"),
+  sidebarOverlay: document.getElementById("sidebarOverlay"),
+  sidebarToggleBtn: document.getElementById("sidebarToggleBtn"),
+  sidebarToggleText: document.getElementById("sidebarToggleText"),
+  sidebarRailToggleBtn: document.getElementById("sidebarRailToggleBtn"),
   groupContent: document.getElementById("groupContent"),
   groupList: document.getElementById("groupList"),
   groupName: document.getElementById("groupName"),
@@ -31,6 +37,50 @@ const elements = {
   outputLabel: document.getElementById("outputLabel"),
   outputBox: document.getElementById("outputBox"),
 };
+
+const sidebarViewport = window.matchMedia("(max-width: 960px)");
+
+function getLabLanguage(lab = {}) {
+  const fileName = lab.file || "";
+  const extension = fileName.split(".").pop()?.toLowerCase();
+
+  if (extension === "js") return "javascript";
+  if (extension === "java") return "java";
+  return "";
+}
+
+function setCodeBlockLanguage(language) {
+  elements.codeBlock.className = language ? `language-${language}` : "";
+}
+
+function updateSidebarToggleUi() {
+  const label = state.sidebarOpen
+    ? (sidebarViewport.matches ? "Close menu" : "Collapse sidebar")
+    : (sidebarViewport.matches ? "Open menu" : "Expand sidebar");
+
+  elements.sidebarToggleBtn?.setAttribute("aria-expanded", String(state.sidebarOpen));
+  elements.sidebarToggleBtn?.setAttribute("aria-label", label);
+  elements.sidebarRailToggleBtn?.setAttribute("aria-expanded", String(state.sidebarOpen));
+  elements.sidebarRailToggleBtn?.setAttribute("aria-label", label);
+
+  if (elements.sidebarToggleText) {
+    elements.sidebarToggleText.textContent = label;
+  }
+}
+
+function setSidebarOpen(isOpen) {
+  state.sidebarOpen = isOpen;
+  document.body.classList.toggle("sidebar-open", isOpen);
+  updateSidebarToggleUi();
+}
+
+function toggleSidebar() {
+  setSidebarOpen(!state.sidebarOpen);
+}
+
+function syncSidebarForViewport() {
+  setSidebarOpen(!sidebarViewport.matches);
+}
 
 function groupPath(groupNumber) {
   return `groups/group${groupNumber}`;
@@ -108,9 +158,20 @@ function renderGroupButtons() {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "group-btn";
-    button.textContent = `Group ${groupNumber}`;
+    button.dataset.short = `G${groupNumber}`;
     button.dataset.group = String(groupNumber);
-    button.addEventListener("click", () => loadGroup(groupNumber));
+    button.addEventListener("click", () => {
+      loadGroup(groupNumber);
+      if (sidebarViewport.matches) {
+        setSidebarOpen(false);
+      }
+    });
+
+    const label = document.createElement("span");
+    label.className = "group-btn-text";
+    label.textContent = `Group ${groupNumber}`;
+
+    button.appendChild(label);
     elements.groupList.appendChild(button);
   }
 }
@@ -282,13 +343,15 @@ function selectSubLab(index) {
 async function loadLab(lab) {
   state.currentLab = lab;
   state.currentCode = "";
+  const labLanguage = getLabLanguage(lab);
   elements.labTitle.textContent = lab.name || "Untitled Lab Act";
   elements.labDescription.textContent = lab.description || "No description provided.";
-  elements.sourceFile.textContent = lab.file || "Java file not listed";
+  elements.sourceFile.textContent = lab.file || "Source file not listed";
   renderInputs(lab.inputs || []);
   setOutput("Program output will appear here.");
   renderScreenshot(lab);
 
+  setCodeBlockLanguage(labLanguage);
   elements.codeBlock.removeAttribute("data-highlighted");
   elements.codeBlock.textContent = "Loading source code...";
   hljs.highlightElement(elements.codeBlock);
@@ -337,10 +400,13 @@ function renderInputs(inputs) {
   });
 }
 
-function collectStdin() {
+function collectInputValues() {
   return Array.from(elements.inputFields.querySelectorAll("[data-stdin='true']"))
-    .map((input) => input.value)
-    .join("\n");
+    .map((input) => input.value);
+}
+
+function collectStdin() {
+  return collectInputValues().join("\n");
 }
 
 function renderScreenshot(lab) {
@@ -373,16 +439,78 @@ function setRunLoading(isLoading) {
   elements.runBtn.classList.toggle("loading", isLoading);
 }
 
+function formatJsConsoleValue(value) {
+  if (typeof value === "string") return value;
+  if (typeof value === "number" || typeof value === "boolean" || value == null) {
+    return String(value);
+  }
+
+  try {
+    return JSON.stringify(value);
+  } catch (error) {
+    return String(value);
+  }
+}
+
+async function runCurrentJavascriptLab() {
+  const inputValues = collectInputValues();
+  const logs = [];
+  const consoleProxy = {
+    log: (...args) => {
+      logs.push(args.map(formatJsConsoleValue).join(" "));
+    },
+  };
+
+  const executeLab = new Function(
+    "inputs",
+    "console",
+    `
+${state.currentCode}
+
+if (typeof main !== "function") {
+  throw new Error("JavaScript lab must define a main(inputs) function.");
+}
+
+return main(inputs);
+`,
+  );
+
+  const result = executeLab(inputValues, consoleProxy);
+  const outputParts = [];
+
+  if (logs.length > 0) {
+    outputParts.push(logs.join("\n"));
+  }
+
+  if (typeof result === "string" && result.trim()) {
+    outputParts.push(result);
+  } else if (result !== undefined && result !== null && result !== "") {
+    outputParts.push(String(result));
+  }
+
+  setOutput(outputParts.join("\n").trim() || "Program finished with no output.");
+}
+
 async function runCurrentLab() {
   if (!state.currentCode || !state.currentLab?.file) {
-    setOutput("No Java source code is loaded for this lab act.", true);
+    setOutput("No source code is loaded for this lab act.", true);
     return;
   }
 
+  const labLanguage = getLabLanguage(state.currentLab);
   setRunLoading(true);
-  setOutput("Running Java code with Piston...");
+  setOutput(
+    labLanguage === "javascript"
+      ? "Running JavaScript in the browser..."
+      : "Running Java code with Piston...",
+  );
 
   try {
+    if (labLanguage === "javascript") {
+      await runCurrentJavascriptLab();
+      return;
+    }
+
     const response = await fetch(PISTON_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -427,7 +555,17 @@ async function runCurrentLab() {
 }
 
 elements.runBtn.addEventListener("click", runCurrentLab);
+elements.sidebarToggleBtn?.addEventListener("click", toggleSidebar);
+elements.sidebarRailToggleBtn?.addEventListener("click", toggleSidebar);
+elements.sidebarOverlay?.addEventListener("click", () => setSidebarOpen(false));
+sidebarViewport.addEventListener("change", syncSidebarForViewport);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && sidebarViewport.matches && state.sidebarOpen) {
+    setSidebarOpen(false);
+  }
+});
 
+syncSidebarForViewport();
 renderGroupButtons();
 loadGroup(1);
 

@@ -1,11 +1,11 @@
 {
   "group": "Group 1",
   "members": ["Rolan Jero Pinton", "Vonn Philip Salve", "Princess Abigail Talidano"],
-  "download": "project.zip",
+  "download": "G1_AUTOMATA-ALGO.zip",
   "labacts": [
     {
       "name": "Division Algorithm",
-      "file": "DivAlgo.java",
+      "file": "DivAlgo.js",
       "screenshot": "screenshots/DivAlgo.png",
       "description": "Computes the quotient and remainder for two integers using the division algorithm.",
       "inputs": [
@@ -14,17 +14,8 @@
       ]
     },
     {
-      "name": "Palindrome",
-      "file": "Palindrome.java",
-      "screenshot": "screenshots/Palindrome.png",
-      "description": "Checks whether the provided string reads the same forward and backward.",
-      "inputs": [
-        { "label": "String", "placeholder": "any string, e.g. racecar" }
-      ]
-    },
-    {
       "name": "Euclidean",
-      "file": "Euclidean.java",
+      "file": "Euclidean.js",
       "screenshot": "screenshots/Euclidean.png",
       "description": "Finds the greatest common divisor of two positive integers using the Euclidean algorithm.",
       "inputs": [
@@ -34,44 +25,38 @@
     },
     {
       "name": "Collatz Sequence",
-      "file": "Collatz.java",
+      "file": "Collatz.js",
       "screenshot": "screenshots/Collatz.png",
-      "description": "Generates the Collatz sequence for a positive integer greater than 0.",
+      "description": "Generates the Collatz sequence for a positive odd integer greater than 0.",
       "inputs": [
-        { "label": "Starting number", "placeholder": "positive integer greater than 0, e.g. 12" }
+        { "label": "Starting number", "placeholder": "positive odd integer, e.g. 27" }
       ]
     },
     {
-      "name": "Recursion",
-      "type": "group",
-      "sublabacts": [
-        {
-          "name": "Fibonacci",
-          "file": "Fibonacci.java",
-          "screenshot": "screenshots/Fibonacci.png",
-          "description": "Fibonacci sequence recursively.",
-          "inputs": [
-            { "label": "Number of terms", "placeholder": "positive integer, e.g. 7" }
-          ]
-        },
-        {
-          "name": "Lucas",
-          "file": "Lucas.java",
-          "screenshot": "screenshots/Lucas.png",
-          "description": "Lucas sequence recursively.",
-          "inputs": [
-            { "label": "Number of terms", "placeholder": "positive integer, e.g. 7" }
-          ]
-        },
-        {
-          "name": "Tribonacci",
-          "file": "Tribonacci.java",
-          "screenshot": "screenshots/Tribonacci.png",
-          "description": "Tribonacci sequence recursively.",
-          "inputs": [
-            { "label": "Number of terms", "placeholder": "positive integer, e.g. 7" }
-          ]
-        }
+      "name": "Fibonacci",
+      "file": "Fibonacci.js",
+      "screenshot": "screenshots/Fibonacci.png",
+      "description": "Generates the Fibonacci sequence for a given number of terms greater than 2, starting with F₀ = 0 and F₁ = 1.",
+      "inputs": [
+        { "label": "Number of terms", "placeholder": "integer greater than 2, e.g. 7" }
+      ]
+    },
+    {
+      "name": "Lucas",
+      "file": "Lucas.js",
+      "screenshot": "screenshots/Lucas.png",
+      "description": "Generates the Lucas sequence for a given number of terms greater than 2, starting with L₀ = 2 and L₁ = 1.",
+      "inputs": [
+        { "label": "Number of terms", "placeholder": "integer greater than 2, e.g. 7" }
+      ]
+    },
+    {
+      "name": "Tribonacci",
+      "file": "Tribonacci.js",
+      "screenshot": "screenshots/Tribonacci.png",
+      "description": "Generates the Tribonacci sequence for a given number of terms greater than 3, starting with T₀ = 0, T₁ = 0, and T₂ = 1.",
+      "inputs": [
+        { "label": "Number of terms", "placeholder": "integer greater than 3, e.g. 7" }
       ]
     }
   ]

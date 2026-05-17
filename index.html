@@ -3,8 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ACSAD Automata Lab Acts</title>
+    <title>Automata Lab Portfolio Hub</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
@@ -13,18 +19,45 @@
   </head>
   <body>
     <div class="app-shell">
-      <aside class="sidebar" aria-label="Group navigation">
-        <div class="brand">
-          
-          <div>
-            <p class="eyebrow">ACSAD </p>
-            <h1>Automata Lab Acts</h1>
+      <aside id="sidebar" class="sidebar" aria-label="Group navigation">
+        <div class="sidebar-header">
+          <div class="brand">
+            <div class="brand-mark" aria-hidden="true">A</div>
+            <div class="brand-copy">
+              <p class="eyebrow">ACSAD </p>
+              <h1>Automata Lab Acts</h1>
+            </div>
           </div>
+          <button
+            id="sidebarRailToggleBtn"
+            class="sidebar-toggle sidebar-toggle-ghost"
+            type="button"
+            aria-controls="sidebar"
+            aria-expanded="true"
+            aria-label="Collapse sidebar"
+          >
+            <span class="toggle-arrow" aria-hidden="true"></span>
+          </button>
         </div>
+
+
         <nav id="groupList" class="group-list" aria-label="Groups"></nav>
       </aside>
 
+      <button id="sidebarOverlay" class="sidebar-overlay" type="button" aria-label="Close navigation"></button>
+
       <main id="groupContent" class="main-content group-content group-content-group1">
+        <section class="main-toolbar" aria-label="Layout controls">
+          
+
+          <div class="toolbar-copy">
+            <p class="eyebrow">Automata </p>
+            <p class="toolbar-description">
+              A lab-first workspace for reviewing algorithm source code, screenshots, and executable outputs.
+            </p>
+          </div>
+        </section>
+
         <section class="hero-card">
           <div>
             <p class="eyebrow">Automata Laboratory Portfolio</p>
@@ -32,7 +65,7 @@
             <p id="memberNames" class="members">Please wait while the lab acts are loaded.</p>
           </div>
           <a id="downloadBtn" class="download-btn" href="#" download aria-disabled="true">
-            Download Java Project
+            Download Group Archive
           </a>
         </section>
 
@@ -41,7 +74,7 @@
           <div id="subTabRow" class="sub-tab-row" role="tablist" aria-label="Recursion lab acts" hidden></div>
 
           <div id="emptyState" class="empty-state" hidden>
-            Select a group with available lab acts to preview its Java activities.
+            Select a group with available lab acts to preview its portfolio content.
           </div>
 
           <article id="labPanel" class="lab-panel">
@@ -60,7 +93,7 @@
 
             <section class="code-section code-block" aria-labelledby="sourceTitle">
               <div class="section-title-row">
-                <h4 id="sourceTitle">Java Source Code</h4>
+                <h4 id="sourceTitle">Source Code</h4>
                 <span id="sourceFile" class="file-pill"></span>
               </div>
               <pre><code id="codeBlock" class="language-java"></code></pre>
@@ -68,7 +101,7 @@
 
             <section class="try-panel try-it-panel" aria-labelledby="tryTitle">
               <div>
-                <p class="eyebrow">Piston Runtime</p>
+                <p class="eyebrow">Interactive Runtime</p>
                 <h4 id="tryTitle">Try It</h4>
               </div>
 
@@ -86,7 +119,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
-    <script src="src/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+    <script type="module" src="src/app.js"></script>
   </body>
 </html>
-
