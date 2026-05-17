@@ -1,215 +1,310 @@
-# ACSAD Automata Lab Acts
+# Automata Lab Portfolio Hub
 
-ACSAD Automata Lab Acts is a static web app for presenting university automata laboratory activities by group. It loads each group's metadata, Java source files, screenshots, and downloadable project zip from the `groups/` folder.
+This repository is the shared submission hub for ACSAD Automata lab acts.
 
-The app is built with plain HTML, CSS, and JavaScript only. It uses highlight.js for Java syntax highlighting and the Piston API to run sample console-based Java programs in the browser.
+Each group submits its work inside its own folder under `groups/`. The site reads that folder, builds the group tabs automatically, shows screenshots, displays the source code, and runs the selected algorithm in the browser.
 
-## Live Site
+The current shell already includes:
 
-Placeholder link: https://your-username.github.io/acsad-automata
+- a collapsible sidebar for group navigation
+- a source-code viewer with syntax highlighting
+- an output panel for running algorithms
+- support for both browser-side JavaScript and Java via Piston
 
-## Enable GitHub Pages
+For new submissions, JavaScript is the preferred runtime because it runs directly in the browser and avoids depending on the Java runner when not needed.
 
-1. Open the repository on GitHub.
-2. Go to `Settings`.
-3. Open `Pages` from the left sidebar.
-4. Under `Build and deployment`, set the source to `Deploy from a branch`.
-5. Select the `main` branch.
-6. Select `/root` as the folder.
-7. Save the settings.
-8. Wait for GitHub Pages to publish the site.
+## What Each Group Must Submit
 
-## Folder Structure
+Each group should only work inside its own folder:
 
 ```text
-acsad-automata/
-├── index.html
-├── README.md
-├── src/
-│   ├── app.js
-│   └── style.css
-└── groups/
-    ├── group1/
-    │   ├── info.json
-    │   ├── DivAlgo.java
-    │   ├── Palindrome.java
-    │   ├── Euclidean.java
-    │   ├── Collatz.java
-    │   ├── Fibonacci.java
-    │   ├── Lucas.java
-    │   ├── Tribonacci.java
-    │   ├── project.zip
-    │   └── screenshots/
-    │       ├── DivAlgo.png
-    │       ├── Palindrome.png
-    │       ├── Euclidean.png
-    │       ├── Collatz.png
-    │       ├── Fibonacci.png
-    │       ├── Lucas.png
-    │       └── Tribonacci.png
-    ├── group2/
-    └── group10/
+groups/groupX/
 ```
 
-## Steps For Blockmates
+Expected contents:
 
-1. Clone the repo.
-
-```bash
-git clone https://github.com/your-username/acsad-automata.git
-cd acsad-automata
+```text
+groups/
+└── groupX/
+    ├── info.json
+    ├── project.zip
+    ├── optional custom.css
+    ├── Algorithm1.js or Algorithm1.java
+    ├── Algorithm2.js or Algorithm2.java
+    └── screenshots/
+        ├── Algorithm1.png
+        └── Algorithm2.png
 ```
 
-2. Go to your assigned group folder, for example:
+Do not edit these shared app files unless the whole class agreed to change the main app shell:
 
-```bash
-cd groups/groupX
-```
+- `index.html`
+- `src/app.js`
+- `src/style.css`
 
-3. Add your self-contained Java files.
+## Current Group 1 Pattern
 
-Each Java file must have a class name that exactly matches the filename. Example: `DivAlgo.java` must contain `public class DivAlgo`.
+Group 1 is now the reference structure for the current submission format.
 
-4. Add screenshots to the `screenshots/` folder.
+Its main tabs are:
 
-The screenshot filename must exactly match the path written in `info.json`.
+- Division Algorithm
+- Euclidean
+- Collatz Sequence
+- Fibonacci
+- Lucas
+- Tribonacci
 
-5. Fill out `info.json`, including the `inputs` array for every runnable lab act.
+These are all top-level tabs. Do not put `Fibonacci`, `Lucas`, and `Tribonacci` under a nested `Recursion` tab unless you were specifically told to do that.
 
-6. Add `project.zip`.
+## Recommended Submission Format
 
-This zip should contain your full Java project with GUI files, not just the console files used by the browser runner.
+Use JavaScript when possible.
 
-7. Push directly to the `main` branch.
+Why:
 
-No pull request is needed. Do not touch other groups' folders or root files.
+- it runs directly in the browser
+- it avoids extra Java execution overhead
+- validation messages are easier to control
+- it matches the current Group 1 implementation
 
-## info.json Field Reference
+If your algorithm is submitted as JavaScript:
 
-| Field | Type | Description |
-| --- | --- | --- |
-| `group` | string | Display name of the group, such as `Group 1`. |
-| `members` | string array | Names of the group members. |
-| `download` | string | Downloadable zip filename. Use `project.zip`. |
-| `labacts` | array | Top-level lab acts shown as tabs. |
-| `name` | string | Display name of a lab act or grouped tab. |
-| `file` | string | Java source filename for a runnable lab act. The class name must match this filename. |
-| `screenshot` | string | Relative screenshot path, usually `screenshots/FileName.png`. |
-| `description` | string | Short explanation shown above the preview and code. |
-| `inputs` | array | Input fields rendered in the Try It panel. Values are joined with newlines and sent to Java stdin. |
-| `inputs[].label` | string | Label shown above an input field. |
-| `inputs[].placeholder` | string | Example input shown inside the input field. |
-| `type` | string | Use `group` when a tab contains sub-tabs instead of a direct Java file. |
-| `sublabacts` | array | Child lab acts for grouped tabs, such as Recursion. |
+- the filename in `info.json` must point to the `.js` file exactly
+- the file must define a `main(inputs)` function
+- `inputs` is an array of strings from the rendered input fields
+- return a string for the program output
+- throw `new Error("message")` for validation failures
 
-## Example Lab Act
+Minimal JavaScript example:
 
-```json
-{
-  "name": "Division Algorithm",
-  "file": "DivAlgo.java",
-  "screenshot": "screenshots/DivAlgo.png",
-  "description": "Computes the quotient and remainder for two integers using the division algorithm.",
-  "inputs": [
-    { "label": "Dividend", "placeholder": "integer, e.g. 10" },
-    { "label": "Divisor", "placeholder": "non-zero integer, e.g. 3" }
-  ]
+```js
+function main(inputs) {
+  const raw = String(inputs[0] ?? "").trim();
+
+  if (raw === "") {
+    throw new Error("Please enter a value before calculating.");
+  }
+
+  const value = Number.parseInt(raw, 10);
+
+  if (Number.isNaN(value)) {
+    throw new Error("Invalid input.");
+  }
+
+  return `Output: ${value}`;
 }
 ```
 
-## Example Grouped Lab Act
+## JavaScript Output Rules
+
+Use this pattern for browser-run JavaScript files:
+
+1. Read values from `inputs[index]`
+2. Validate them inside the same file
+3. Return the final output as a string
+4. If invalid, throw an `Error`
+
+Example:
+
+```js
+function main(inputs) {
+  const first = String(inputs[0] ?? "").trim();
+  const second = String(inputs[1] ?? "").trim();
+
+  if (!first || !second) {
+    throw new Error("Please complete all required inputs.");
+  }
+
+  return `First: ${first}\nSecond: ${second}`;
+}
+```
+
+## Java Support
+
+Java is still supported, but it is now the fallback path, not the preferred one.
+
+If your algorithm is submitted as Java:
+
+- the filename in `info.json` must point to the `.java` file exactly
+- the class name must exactly match the filename
+- the file must be self-contained
+- read input using `Scanner(System.in)`
+- keep the input order exactly the same as the `inputs` array in `info.json`
+
+Minimal Java example:
+
+```java
+import java.util.Scanner;
+
+public class SampleAlgo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String value = scanner.hasNextLine() ? scanner.nextLine() : "";
+
+        if (value.trim().isEmpty()) {
+            System.out.println("Invalid input.");
+            return;
+        }
+
+        System.out.println("Output: " + value);
+    }
+}
+```
+
+## info.json Rules
+
+Each group folder must have a valid `info.json`.
+
+Example:
 
 ```json
 {
-  "name": "Recursion",
-  "type": "group",
-  "sublabacts": [
+  "group": "Group 2",
+  "members": [
+    "Member One",
+    "Member Two",
+    "Member Three"
+  ],
+  "download": "G2_AUTOMATA-ALGO.zip",
+  "labacts": [
     {
-      "name": "Fibonacci",
-      "file": "Fibonacci.java",
-      "screenshot": "screenshots/Fibonacci.png",
-      "description": "Fibonacci sequence recursively.",
+      "name": "Division Algorithm",
+      "file": "DivAlgo.js",
+      "screenshot": "screenshots/DivAlgo.png",
+      "description": "Computes the quotient and remainder for two integers using the division algorithm.",
       "inputs": [
-        { "label": "Number of terms", "placeholder": "positive integer, e.g. 7" }
+        { "label": "Dividend", "placeholder": "integer, e.g. 10" },
+        { "label": "Divisor", "placeholder": "non-zero integer, e.g. 3" }
       ]
     }
   ]
 }
 ```
 
-## Input Requirements
+Field reference:
 
-| Lab Act | Input Fields | Requirement |
+| Field | Type | Notes |
 | --- | --- | --- |
-| Division Algorithm | Dividend, Divisor | Dividend must be an integer. Divisor must be a non-zero integer. |
-| Palindrome | String | Any non-empty string. |
-| Euclidean | First positive integer, Second positive integer | Both values must be positive integers. |
-| Collatz Sequence | Starting number | Must be a positive integer greater than 0. |
-| Fibonacci | Number of terms | Must be a positive integer. |
-| Lucas | Number of terms | Must be a positive integer. |
-| Tribonacci | Number of terms | Must be a positive integer. |
+| `group` | string | Display name, such as `Group 2` |
+| `members` | string[] | Group member names |
+| `download` | string | Zip filename shown in the download button |
+| `labacts` | array | Top-level tabs shown in the app |
+| `labacts[].name` | string | Tab label |
+| `labacts[].file` | string | Source filename, usually `.js` or `.java` |
+| `labacts[].screenshot` | string | Relative image path |
+| `labacts[].description` | string | Description shown above the preview |
+| `labacts[].inputs` | array | Input field definitions |
+| `inputs[].label` | string | Input label |
+| `inputs[].placeholder` | string | Input placeholder |
 
-## Optional Group Styling
+Important:
 
-Each group folder can optionally include a `custom.css` file.
+- the `file` path must match the real filename exactly
+- the `screenshot` path must match the real image exactly
+- the `download` field must match the zip filename exactly
 
-When a group is selected, the app checks for `groups/groupX/custom.css`. If the file exists, it is loaded only for that active group. When another group is selected, the previous custom stylesheet is removed first.
+## Screenshot Rules
 
-Group custom CSS should be scoped to `.group-content` so it does not affect other parts of the app. The main content area also receives a group-specific class such as `.group-content-group1`, `.group-content-group2`, and so on.
+For every lab act:
+
+- add a matching screenshot under `screenshots/`
+- use the exact filename written in `info.json`
+- keep screenshots readable and cropped properly
+
+Example:
+
+```text
+groups/group2/screenshots/DivAlgo.png
+```
+
+## Optional custom.css
+
+Each group may optionally include:
+
+```text
+groups/groupX/custom.css
+```
+
+This file is loaded only when that group is active.
+
+Rules:
+
+- scope your selectors under `.group-content`
+- use it only for group-specific visual identity
+- do not break the shared runner layout
 
 Do not restyle these protected app areas:
 
+- `.sidebar`
 - `.code-block`
 - `.try-it-panel`
-- `.sidebar`
 
-Example `groups/group1/custom.css`:
+Example:
 
 ```css
 .group-content {
   background: #f7fbff;
-  font-family: "Trebuchet MS", sans-serif;
 }
 
 .group-content .hero-card,
 .group-content .lab-card {
-  background: #ffffff;
-  border-color: #9cc7ff;
-}
-
-.group-content .tab-btn.active {
-  background: #d9ecff;
+  border-color: #b7d6ff;
 }
 ```
 
-## Java File Requirements
+## Submission Checklist For Other Groups
 
-- Each `.java` file must be self-contained.
-- Do not depend on external classes or project-only files.
-- Use `Scanner(System.in)` only for browser-run input.
-- Do not use `JOptionPane` or GUI dialogs in the runnable source files.
-- The class name must exactly match the filename.
-- Include validation as a static helper method inside the same file.
-- Include a `public static void main(String[] args)` method.
-- Keep input order the same as the `inputs` array in `info.json`.
+Before submitting, verify all of these:
+
+1. Your work is inside `groups/groupX/` only.
+2. `info.json` is valid JSON.
+3. All `file`, `screenshot`, and `download` values match the real filenames exactly.
+4. Your tabs are top-level lab acts unless instructed otherwise.
+5. Your JavaScript files define `main(inputs)` and return output strings.
+6. Your validation messages are clear and handled inside the same file.
+7. Your screenshots exist and load.
+8. Your zip file exists and downloads correctly.
+
+## Local Preview
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the project locally:
+
+```bash
+npm run dev
+```
+
+Build the project:
+
+```bash
+npm run build
+```
 
 ## Troubleshooting
 
 | Problem | Fix |
 | --- | --- |
-| Code not running | Check that the class name matches the filename exactly. |
-| Wrong output | Check that the input order matches the `info.json` inputs array. |
-| Screenshot not showing | The filename must match the `screenshot` field exactly. |
-| Zip not downloading | The file must be named `project.zip`. |
-| Group not loading | Make sure the group folder has a valid `info.json`. |
-| Browser blocks file loading | Run the project through a local static server instead of opening `index.html` directly. |
+| Group does not load | Check that `groups/groupX/info.json` exists and is valid JSON |
+| Screenshot does not appear | Check the exact path in `info.json` |
+| Source code does not show | Check that the `file` field matches the real filename |
+| JavaScript lab does not run | Make sure the file defines `main(inputs)` |
+| Validation does not show | Throw `new Error("message")` in your JS file |
+| Java lab does not run | Make sure the class name matches the filename and the file is self-contained |
+| Download button does nothing | Check that the zip filename matches the `download` field |
 
-## Local Preview
+## Final Note For Blockmates
 
-Because the app loads JSON and Java files with `fetch()`, use a local static server.
+Follow the Group 1 structure as your reference.
 
-```bash
-npx serve .
-```
+If you are only submitting your group’s work, do not rename shared root files and do not redesign the main shell. Your main responsibility is:
 
-Then open the local URL shown in the terminal.
+- correct `info.json`
+- correct source files
+- correct screenshots
+- correct downloadable zip
