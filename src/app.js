@@ -193,10 +193,21 @@ function setActiveGroupButton(groupNumber) {
 
 async function fetchText(path) {
   const response = await fetch(path, { cache: "no-store" });
-  if (!response.ok) {
-    throw new Error(`Unable to load ${path}`);
+  if (response.ok) {
+    return response.text();
   }
-  return response.text();
+
+  if (path.endsWith(".js")) {
+    const commaPath = path.replace(/\.js$/, ",js");
+    if (commaPath !== path) {
+      const fallbackResponse = await fetch(commaPath, { cache: "no-store" });
+      if (fallbackResponse.ok) {
+        return fallbackResponse.text();
+      }
+    }
+  }
+
+  throw new Error(`Unable to load ${path}`);
 }
 
 async function fetchJson(path) {
