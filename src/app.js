@@ -40,10 +40,19 @@ const elements = {
 
 const sidebarViewport = window.matchMedia("(max-width: 960px)");
 
-function getLabLanguage(lab = {}) {
+// Used for SYNTAX HIGHLIGHTING only — follows displayFile if present
+function getDisplayLanguage(lab = {}) {
+  const fileName = lab.displayFile || lab.file || "";
+  const extension = fileName.split(".").pop()?.toLowerCase();
+  if (extension === "js") return "javascript";
+  if (extension === "java") return "java";
+  return "";
+}
+
+// Used for RUNTIME EXECUTION — always follows the actual runnable file
+function getRunLanguage(lab = {}) {
   const fileName = lab.file || "";
   const extension = fileName.split(".").pop()?.toLowerCase();
-
   if (extension === "js") return "javascript";
   if (extension === "java") return "java";
   return "";
@@ -343,23 +352,23 @@ function selectSubLab(index) {
 async function loadLab(lab) {
   state.currentLab = lab;
   state.currentCode = "";
-  const labLanguage = getLabLanguage(lab);
+  const labLanguage = getDisplayLanguage(lab);
   elements.labTitle.textContent = lab.name || "Untitled Lab Act";
   elements.labDescription.textContent = lab.description || "No description provided.";
-  elements.sourceFile.textContent = lab.file || "Source file not listed";
+  elements.sourceFile.textContent = lab.displayFile || lab.file || "Source file not listed";
   renderInputs(lab.inputs || []);
   setOutput("Program output will appear here.");
   renderScreenshot(lab);
 
-  setCodeBlockLanguage(labLanguage);
+  setCodeBlockLanguage(getDisplayLanguage(lab));
   elements.codeBlock.removeAttribute("data-highlighted");
   elements.codeBlock.textContent = "Loading source code...";
   hljs.highlightElement(elements.codeBlock);
 
   try {
-    const code = await fetchText(`${groupPath(state.currentGroupNumber)}/${lab.file}`);
-    state.currentCode = code;
-    elements.codeBlock.textContent = code;
+    const displayCode = await fetchText(`${groupPath(state.currentGroupNumber)}/${lab.displayFile || lab.file}`);
+    state.currentCode = await fetchText(`${groupPath(state.currentGroupNumber)}/${lab.file}`);
+    elements.codeBlock.textContent = displayCode;
     elements.codeBlock.removeAttribute("data-highlighted");
     hljs.highlightElement(elements.codeBlock);
   } catch (error) {
@@ -497,7 +506,7 @@ async function runCurrentLab() {
     return;
   }
 
-  const labLanguage = getLabLanguage(state.currentLab);
+  const labLanguage = getRunLanguage(state.currentLab);
   setRunLoading(true);
   setOutput(
     labLanguage === "javascript"
