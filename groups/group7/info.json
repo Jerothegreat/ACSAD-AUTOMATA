@@ -1,0 +1,92 @@
+{
+  "group": "Group 7",
+  "members": [
+    "Rhussel Jhone Combo",
+    "Samuel Zapata",
+    "Robin James Guerrero",
+    "Reymart Manginsay"
+  ],
+  "download": "G7_AUTOMATA.zip",
+  "labacts": [
+    {
+      "name": "Division Algorithm",
+      "file": "DivAlgo.js",
+      "screenshot": "screenshots/DivAlgo.png",
+      "description": "Computes the quotient and remainder for two integers using the division algorithm.",
+      "inputs": [
+        {
+          "label": "First Integer",
+          "placeholder": "e.g. 10"
+        },
+        {
+          "label": "Second Integer",
+          "placeholder": "e.g. 3"
+        }
+      ]
+    },
+    {
+      "name": "Euclidean",
+      "file": "EuclideanAlgo.js",
+      "screenshot": "screenshots/EuclideanAlgo.png",
+      "description": "Computes the GCD and LCM of two integers using the Euclidean algorithm.",
+      "inputs": [
+        {
+          "label": "First Integer",
+          "placeholder": "e.g. 24"
+        },
+        {
+          "label": "Second Integer",
+          "placeholder": "e.g. 18"
+        }
+      ]
+    },
+    {
+      "name": "Collatz Sequence",
+      "file": "Collatz.js",
+      "screenshot": "screenshots/Collatz.png",
+      "description": "Finds all the terms of the Collatz sequence.",
+      "inputs": [
+        {
+          "label": "Initial Value",
+          "placeholder": "positive odd integer"
+        }
+      ]
+    },
+    {
+      "name": "Fibonacci",
+      "file": "Fibonacci.js",
+      "screenshot": "screenshots/Fibonacci.png",
+      "description": "Generates the Fibonacci numbers.",
+      "inputs": [
+        {
+          "label": "Number of terms",
+          "placeholder": "> 2"
+        }
+      ]
+    },
+    {
+      "name": "Lucas",
+      "file": "Lucas.js",
+      "screenshot": "screenshots/Lucas.png",
+      "description": "Generates the Lucas numbers.",
+      "inputs": [
+        {
+          "label": "Number of terms",
+          "placeholder": "> 2"
+        }
+      ]
+    },
+    {
+      "name": "Tribonacci",
+      "file": "Tribonacci.js",
+      "screenshot": "screenshots/Tribonacci.png",
+      "description": "Generates the Tribonacci numbers.",
+      "inputs": [
+        {
+          "label": "Number of terms",
+          "placeholder": "> 3"
+        }
+      ]
+    }
+  ]
+}
