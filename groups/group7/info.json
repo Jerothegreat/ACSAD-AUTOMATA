@@ -11,6 +11,7 @@
     {
       "name": "Division Algorithm",
       "file": "DivAlgo.js",
+      "displayFile": "java-version-original/DivisionAndEuclidean/DivisionAlgorithm.java",
       "screenshot": "screenshots/DivAlgo.png",
       "description": "Computes the quotient and remainder for two integers using the division algorithm.",
       "inputs": [
@@ -27,6 +28,7 @@
     {
       "name": "Euclidean",
       "file": "EuclideanAlgo.js",
+      "displayFile": "java-version-original/DivisionAndEuclidean/EuclideanAlgorithm.java",
       "screenshot": "screenshots/EuclideanAlgo.png",
       "description": "Computes the GCD and LCM of two integers using the Euclidean algorithm.",
       "inputs": [
@@ -43,6 +45,7 @@
     {
       "name": "Collatz Sequence",
       "file": "Collatz.js",
+      "displayFile": "java-version-original/CollatzSequence/CollatzSequence.java",
       "screenshot": "screenshots/Collatz.png",
       "description": "Finds all the terms of the Collatz sequence.",
       "inputs": [
@@ -55,6 +58,7 @@
     {
       "name": "Fibonacci",
       "file": "Fibonacci.js",
+      "displayFile": "java-version-original/Recursion/RecursionApp.java",
       "screenshot": "screenshots/Fibonacci.png",
       "description": "Generates the Fibonacci numbers.",
       "inputs": [
@@ -67,6 +71,7 @@
     {
       "name": "Lucas",
       "file": "Lucas.js",
+      "displayFile": "java-version-original/Recursion/RecursionApp.java",
       "screenshot": "screenshots/Lucas.png",
       "description": "Generates the Lucas numbers.",
       "inputs": [
@@ -79,6 +84,7 @@
     {
       "name": "Tribonacci",
       "file": "Tribonacci.js",
+      "displayFile": "java-version-original/Recursion/RecursionApp.java",
       "screenshot": "screenshots/Tribonacci.png",
       "description": "Generates the Tribonacci numbers.",
       "inputs": [
@@ -91,6 +97,7 @@
     {
       "name": "Palindrome",
       "file": "Palindrome.js",
+      "displayFile": "java-version-original/Palindrome/PalindromeApp.java",
       "screenshot": "screenshots/Palindrome.png",
       "description": "Checks if a string is a palindrome without using built-in methods.",
       "inputs": [
