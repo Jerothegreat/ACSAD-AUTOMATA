@@ -1,4 +1,4 @@
-const GROUP_COUNT = 10;
+const GROUP_COUNT = 11;
 const PISTON_ENDPOINT = "https://emkc.org/api/v2/piston/execute";
 
 const state = {
