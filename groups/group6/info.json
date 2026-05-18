@@ -1,0 +1,77 @@
+{
+  "group": "Group 6",
+  "members": [
+    "HOBAYAN, Craig David",
+    "FAMINI, Denice",
+    "EGOC, Joey",
+    "SACAYLE, Jestin Clark"
+  ],
+  "download": "G6_AUTOMATA-ALGO.zip",
+  "labacts": [
+    {
+      "name": "Division Algorithm",
+      "file": "DivAlgo.js",
+      "screenshot": "screenshots/divalgo.png",
+      "description": "Computes the quotient and remainder for two integers using the division algorithm.",
+      "inputs": [
+        { "label": "Dividend", "placeholder": "integer, e.g. 10" },
+        { "label": "Divisor", "placeholder": "non-zero integer, e.g. 3" }
+      ]
+    },
+    {
+      "name": "Euclidean",
+      "file": "Euclidean.js",
+      "screenshot": "screenshots/euclidean.png",
+      "description": "Finds the GCD and LCM of two positive integers using the Euclidean algorithm, showing each step.",
+      "inputs": [
+        { "label": "First positive integer", "placeholder": "e.g. 48" },
+        { "label": "Second positive integer", "placeholder": "e.g. 18" }
+      ]
+    },
+    {
+      "name": "Collatz Sequence",
+      "file": "Collatz.js",
+      "screenshot": "screenshots/collatz.png",
+      "description": "Generates the Collatz sequence for a positive odd integer, applying 3n+1 until it reaches 1.",
+      "inputs": [
+        { "label": "Starting number", "placeholder": "positive odd integer, e.g. 27" }
+      ]
+    },
+    {
+      "name": "Fibonacci",
+      "file": "Fibonacci.js",
+      "screenshot": "screenshots/fibonacci.png",
+      "description": "Generates the Fibonacci sequence for a given number of terms greater than 2, starting with F₀ = 0 and F₁ = 1.",
+      "inputs": [
+        { "label": "Number of terms", "placeholder": "integer greater than 2, e.g. 7" }
+      ]
+    },
+    {
+      "name": "Lucas",
+      "file": "Lucas.js",
+      "screenshot": "screenshots/lucas.png",
+      "description": "Generates the Lucas sequence for a given number of terms greater than 2, starting with L₀ = 2 and L₁ = 1.",
+      "inputs": [
+        { "label": "Number of terms", "placeholder": "integer greater than 2, e.g. 7" }
+      ]
+    },
+    {
+      "name": "Tribonacci",
+      "file": "Tribonacci.js",
+      "screenshot": "screenshots/tribonacci.png",
+      "description": "Generates the Tribonacci sequence for a given number of terms greater than 3, starting with T₀ = 0, T₁ = 0, and T₂ = 1.",
+      "inputs": [
+        { "label": "Number of terms", "placeholder": "integer greater than 3, e.g. 7" }
+      ]
+    },
+    {
+      "name": "Palindrome Checker",
+      "file": "PalindromeChecker.js",
+      "screenshot": "screenshots/palindrome.png",
+      "description": "Checks whether a given string (letters only, no numbers) is a palindrome.",
+      "inputs": [
+        { "label": "Enter a string", "placeholder": "letters only, e.g. racecar" }
+      ]
+    }
+  ]
+}
