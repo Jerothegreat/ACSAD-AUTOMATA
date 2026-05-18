@@ -1,0 +1,297 @@
+/* 
+   Group 7 — Catppuccin Mocha Dark Theme
+   Scoped exclusively to .group-content-group7
+   Fixes all readability issues + modern glassmorphism polish
+*/
+
+/* ===== BASE ===== */
+.group-content-group7 {
+  background-color: #1e1e2e !important;
+  color: #cdd6f4 !important;
+  background-image:
+    radial-gradient(circle at top right, rgba(137, 180, 250, 0.07), transparent 55%),
+    radial-gradient(circle at bottom left, rgba(243, 139, 168, 0.04), transparent 55%) !important;
+}
+
+/* ===== TOOLBAR ===== */
+/* "AUTOMATA" eyebrow label */
+.group-content-group7 .eyebrow {
+  color: #89b4fa !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.5px !important;
+}
+
+/* Subtitle description beneath "AUTOMATA" */
+.group-content-group7 .toolbar-description {
+  color: #bac2de !important;
+  font-size: 0.95rem !important;
+}
+
+/* ===== HERO CARD ===== */
+.group-content-group7 .hero-card {
+  background: rgba(45, 45, 65, 0.65) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(88, 91, 112, 0.35) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Group name heading */
+.group-content-group7 #groupName {
+  color: #cdd6f4 !important;
+}
+
+/* Members list */
+.group-content-group7 #memberNames {
+  color: #bac2de !important;
+  font-size: 0.95rem !important;
+}
+
+/* Download button */
+.group-content-group7 .download-btn {
+  background: linear-gradient(135deg, #89b4fa, #b4befe) !important;
+  color: #1e1e2e !important;
+  border-radius: 14px !important;
+  font-weight: 700 !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(137, 180, 250, 0.3) !important;
+  transition: all 0.25s ease !important;
+}
+
+.group-content-group7 .download-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 28px rgba(137, 180, 250, 0.5) !important;
+}
+
+/* ===== LAB CARD ===== */
+.group-content-group7 .lab-card {
+  background: rgba(45, 45, 65, 0.55) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(88, 91, 112, 0.3) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* ===== TABS ===== */
+/* Override the default light gradient background on the tab strip */
+.group-content-group7 .tab-row {
+  background: rgba(30, 30, 50, 0.85) !important;
+  border-bottom: 1px solid rgba(88, 91, 112, 0.35) !important;
+}
+
+.group-content-group7 .sub-tab-row {
+  background: rgba(25, 25, 42, 0.9) !important;
+  border-bottom: 1px solid rgba(88, 91, 112, 0.25) !important;
+}
+
+/* Inactive tab buttons — override the white pill style */
+.group-content-group7 .tab-btn,
+.group-content-group7 .sub-tab-btn {
+  background: rgba(55, 55, 80, 0.6) !important;
+  border: 1px solid rgba(88, 91, 112, 0.4) !important;
+  color: #bac2de !important;
+  font-weight: 600 !important;
+  font-size: 0.79rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.group-content-group7 .tab-btn:hover,
+.group-content-group7 .sub-tab-btn:hover {
+  background: rgba(137, 180, 250, 0.15) !important;
+  border-color: rgba(137, 180, 250, 0.4) !important;
+  color: #cdd6f4 !important;
+}
+
+/* Active tab */
+.group-content-group7 .tab-btn.active,
+.group-content-group7 .sub-tab-btn.active {
+  background: rgba(137, 180, 250, 0.2) !important;
+  border-color: #89b4fa !important;
+  color: #89b4fa !important;
+}
+
+/* ===== LAB HEADING ===== */
+/* "SELECTED LAB ACT" eyebrow */
+.group-content-group7 .lab-heading .eyebrow {
+  color: #89b4fa !important;
+}
+
+/* Lab title h3 */
+.group-content-group7 #labTitle {
+  color: #cdd6f4 !important;
+}
+
+/* Lab description — THIS WAS THE HARD TO READ PART */
+.group-content-group7 #labDescription,
+.group-content-group7 .lab-description {
+  color: #bac2de !important;
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+}
+
+/* ===== SOURCE CODE SECTION ===== */
+.group-content-group7 .code-block,
+.group-content-group7 .code-section {
+  background: rgba(40, 40, 60, 0.7) !important;
+  border: 1px solid rgba(88, 91, 112, 0.3) !important;
+  border-radius: 18px !important;
+}
+
+/* "Source Code" title */
+.group-content-group7 #sourceTitle {
+  color: #cdd6f4 !important;
+}
+
+/* File pill badge */
+.group-content-group7 .file-pill {
+  background: rgba(137, 180, 250, 0.15) !important;
+  color: #89b4fa !important;
+  border: 1px solid rgba(137, 180, 250, 0.3) !important;
+  border-radius: 8px !important;
+  font-size: 0.78rem !important;
+  padding: 3px 10px !important;
+}
+
+/* ===== TRY IT PANEL ===== */
+.group-content-group7 .try-it-panel,
+.group-content-group7 .try-panel {
+  background: rgba(45, 45, 65, 0.6) !important;
+  border: 1px solid rgba(88, 91, 112, 0.3) !important;
+  border-radius: 20px !important;
+}
+
+/* "INTERACTIVE RUNTIME" eyebrow */
+.group-content-group7 .try-it-panel .eyebrow {
+  color: #89b4fa !important;
+}
+
+/* "Try It" heading */
+.group-content-group7 #tryTitle {
+  color: #cdd6f4 !important;
+}
+
+/* Input labels — THESE WERE HARD TO READ */
+.group-content-group7 .input-field label {
+  color: #cdd6f4 !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+}
+
+/* Input fields */
+.group-content-group7 .try-it-panel input,
+.group-content-group7 .input-field input {
+  background: rgba(30, 30, 46, 0.9) !important;
+  border: 1px solid rgba(88, 91, 112, 0.6) !important;
+  color: #cdd6f4 !important;
+  border-radius: 12px !important;
+  font-size: 1rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.group-content-group7 .try-it-panel input::placeholder,
+.group-content-group7 .input-field input::placeholder {
+  color: #585b70 !important;
+}
+
+.group-content-group7 .try-it-panel input:focus,
+.group-content-group7 .input-field input:focus {
+  border-color: #89b4fa !important;
+  box-shadow: 0 0 0 3px rgba(137, 180, 250, 0.2) !important;
+  outline: none !important;
+}
+
+/* Run button */
+.group-content-group7 #runBtn,
+.group-content-group7 .run-btn {
+  background: linear-gradient(135deg, #a6e3a1, #94e2d5) !important;
+  color: #1e1e2e !important;
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(166, 227, 161, 0.3) !important;
+  transition: all 0.2s ease !important;
+}
+
+.group-content-group7 #runBtn:hover,
+.group-content-group7 .run-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(166, 227, 161, 0.5) !important;
+}
+
+/* Output label */
+.group-content-group7 #outputLabel {
+  color: #bac2de !important;
+  font-weight: 600 !important;
+  font-size: 0.85rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+}
+
+/* Output box */
+.group-content-group7 #outputBox,
+.group-content-group7 .output-box {
+  background: rgba(24, 24, 37, 0.95) !important;
+  border: 1px solid rgba(88, 91, 112, 0.4) !important;
+  color: #a6e3a1 !important;
+  border-radius: 14px !important;
+  font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace !important;
+  font-size: 0.9rem !important;
+  line-height: 1.6 !important;
+}
+
+.group-content-group7 #outputBox.error,
+.group-content-group7 .output-box.error {
+  color: #f38ba8 !important;
+}
+
+/* ===== SCREENSHOT PREVIEW ===== */
+.group-content-group7 .preview-box {
+  background: rgba(30, 30, 46, 0.6) !important;
+  border: 2px dashed rgba(88, 91, 112, 0.5) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+}
+
+.group-content-group7 #previewFallback {
+  color: #7f849c !important;
+  font-size: 0.9rem !important;
+}
+
+
+/* ===== FLOATING JAVA MASCOT ===== */
+.group-content-group7 .hero-card {
+  position: relative;
+}
+
+.group-content-group7 .hero-card::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: -450px;
+  width: 500px;
+  height: 500px;
+  background-image: url('java-version-original/JavaImage.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right top;
+  pointer-events: none;
+  z-index: 100;
+  filter: drop-shadow(0 15px 40px rgba(0, 0, 0, 0.4));
+}
+
+@media (max-width: 1300px) {
+  .group-content-group7 .hero-card::after {
+    opacity: 0.3;
+    right: -40px;
+  }
+}
+
+@media (max-width: 900px) {
+  .group-content-group7 .hero-card::after {
+    display: none;
+  }
+}

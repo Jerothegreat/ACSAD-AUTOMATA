@@ -6,7 +6,7 @@ function generateSequence(rawInput, name, minInput, initialTerms) {
     rawInput = String(rawInput ?? "").trim();
     if (!rawInput) throw new Error("Please enter a value.");
     if (rawInput.includes(".")) throw new Error("Decimals are not allowed. Please enter a whole number.");
-    if (!/^\\d+$/.test(rawInput)) {
+    if (!/^\d+$/.test(rawInput)) {
         if (rawInput.startsWith("-")) throw new Error("Negative numbers are not allowed. Please enter a positive whole number.");
         throw new Error("Invalid input. Only positive whole numbers are accepted (no letters, symbols, or decimals).");
     }

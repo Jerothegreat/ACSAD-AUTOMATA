@@ -87,6 +87,18 @@
           "placeholder": "> 3"
         }
       ]
+    },
+    {
+      "name": "Palindrome",
+      "file": "Palindrome.js",
+      "screenshot": "screenshots/Palindrome.png",
+      "description": "Checks if a string is a palindrome without using built-in methods.",
+      "inputs": [
+        {
+          "label": "Enter a string",
+          "placeholder": "e.g. Race car"
+        }
+      ]
     }
   ]
 }
