@@ -1,0 +1,98 @@
+
+.group-content {
+  background-image: 
+    linear-gradient(rgba(24, 24, 27, 0.6), rgba(24, 24, 27, 0.6)), 
+    url('./BG.png');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f4f4f5;
+  color: #18181b;
+}
+
+.group-content .eyebrow {
+  color: #7a7a7a;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.group-content .toolbar-description {
+  color: #dfdfdf;
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.group-content .lab-description,
+.group-content .members {
+    color: #3d3d3d;
+}
+
+.group-content .hero-card,
+.group-content .lab-card {
+  background-color: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.group-content .hero-card:hover,
+.group-content .lab-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+}
+
+.group-content .download-btn,
+.group-content .run-btn {
+  background-color:  #111f2e;
+  color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+  border: none;
+}
+
+.group-content .download-btn:hover,
+.group-content .run-btn:hover {
+  background-color: #195d72;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 8px -1px rgba(79, 70, 229, 0.3);
+}
+
+.group-content .tab-row {
+  background-color: #fafafa;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+.group-content .sub-tab-row {
+  background-color: #111f2e;
+  border-bottom: 1px solid #d4d4d8;
+}
+
+.group-content .tab-btn,
+.group-content .sub-tab-btn {
+  background-color: #ffffff;
+  border: 1px solid #e4e4e7;
+  color: #52525b; 
+  border-radius: 9999px;
+  font-weight: 600;
+}
+
+.group-content .tab-btn:hover,
+.group-content .sub-tab-btn:hover {
+  background-color: #f4f4f5;
+  color: #18181b;
+}
+
+.group-content .tab-btn.active,
+.group-content .sub-tab-btn.active {
+  background-color: #e0e7ff;
+  border-color: #1e2353;
+  color:  #111f2e;
+}
+ /** ss **/
+ 
+.group-content .preview-box {
+  background-color: #000514;
+  border: 2px dashed #d4d4d8;
+  border-radius: 12px;
+}

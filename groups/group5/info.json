@@ -1,0 +1,76 @@
+{
+  "group": "Group 5",
+  "members": [
+    "Avril Tiffany Jumawan", 
+    "Hazel Ann Alampayan", 
+    "Sean Steven Bautista"
+  ],
+  "download": "G5_AUTOMATA-ALGO.zip",
+  "labacts": [
+    {
+      "name": "Division Algorithm",
+      "file": "DivAlgo.js",
+      "screenshot": "screenshots/DivAlgo.JPG",
+      "description": "Computes the quotient and remainder for two integers using the formal division algorithm.",
+      "inputs": [
+        { "label": "Dividend:", "placeholder": "positive integer" },
+        { "label": "Divisor:", "placeholder": "positive integer" }
+      ]
+    },
+    {
+      "name": "Euclidean",
+      "file": "Euclidean.js",
+      "screenshot": "screenshots/Euclidean.JPG",
+      "description": "Finds the greatest common divisor (GCD) and least common multiple (LCM) of two integers by repeated division.",
+      "inputs": [
+        { "label": "Integer A:", "placeholder": "positive integer" },
+        { "label": "Integer B:", "placeholder": "positive integer" }
+      ]
+    },
+    {
+      "name": "Collatz Sequence",
+      "file": "Collatz.js",
+      "screenshot": "screenshots/Collatz.JPG",
+      "description": "Generates a sequence from a positive odd integer. If odd, multiply by 3 and add 1. If even, divide by 2, until reaching 1.",
+      "inputs": [
+        { "label": "Positive Odd Integer:", "placeholder": "e.g., 27" }
+      ]
+    },
+    {
+      "name": "Fibonacci",
+      "file": "Fibonacci.js",
+      "screenshot": "screenshots/Fibonacci.JPG",
+      "description": "A recursive sequence where F(0)=0, F(1)=1, and F(n) = F(n-1) + F(n-2) for n >= 2.",
+      "inputs": [
+        { "label": "Number of terms (n > 2):", "placeholder": "integer greater than 2" }
+      ]
+    },
+    {
+      "name": "Lucas",
+      "file": "Lucas.js",
+      "screenshot": "screenshots/Lucas.JPG",
+      "description": "A recursive sequence where L(0)=2, L(1)=1, and L(n) = L(n-1) + L(n-2) for n >= 2.",
+      "inputs": [
+        { "label": "Number of terms (n > 2):", "placeholder": "integer greater than 2" }
+      ]
+    },
+    {
+      "name": "Tribonacci",
+      "file": "Tribonacci.js",
+      "screenshot": "screenshots/Tribonacci.JPG",
+      "description": "A recursive sequence where T(0)=0, T(1)=0, T(2)=1, and T(n) = T(n-1) + T(n-2) + T(n-3) for n >= 3.",
+      "inputs": [
+        { "label": "Number of terms (n > 3):", "placeholder": "integer greater than 3" }
+      ]
+    },
+    {
+      "name": "Palindrome",
+      "file": "Palindrome.js",
+      "screenshot": "screenshots/palindrome.JPG",
+      "description": "Evaluates a string to check if it reads the same forwards and backwards, ignoring spaces and capitalization.",
+      "inputs": [
+        { "label": "Enter String:", "placeholder": "e.g., Kayak" }
+      ]
+    }
+  ]
+}
