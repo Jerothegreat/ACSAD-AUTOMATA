@@ -66,7 +66,7 @@
     {
       "name": "Palindrome",
       "file": "Palindrome.js",
-      "screenshot": "screenshots/palindrome.JPG",
+      "screenshot": "screenshots/Palindrome.JPG",
       "description": "Evaluates a string to check if it reads the same forwards and backwards, ignoring spaces and capitalization.",
       "inputs": [
         { "label": "Enter String:", "placeholder": "e.g., Kayak" }
