@@ -1,0 +1,223 @@
+/* ============================================================
+   Group 6 — Custom Theme
+   Palette pulled from the global sidebar & primary teal tones.
+   All selectors scoped under .group-content as required.
+   ============================================================ */
+
+/* ── Base canvas ── */
+.group-content {
+  background: #131c2b;
+  color: #eaf1ff;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* ── Hero / intro card ── */
+.group-content .hero-card {
+  background: #1e293b;
+  border: 1px solid #2a3f5f;
+  border-top: 3px solid #008080;
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(0, 128, 128, 0.08);
+  color: #eaf1ff;
+}
+
+.group-content .hero-card h1,
+.group-content .hero-card h2 {
+  color: #93f2f2;
+}
+
+.group-content .hero-card p {
+  color: #bcc7de;
+}
+
+/* ── Lab / algorithm cards ── */
+.group-content .lab-card {
+  background: #1a2640;
+  border: 1px solid #2a3f5f;
+  border-radius: 12px;
+  box-shadow: 0 18px 40px rgba(33, 49, 69, 0.12);
+  color: #eaf1ff;
+  transition: border-color 260ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 260ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group-content .lab-card:hover {
+  border-color: #008080;
+  box-shadow: 0 14px 28px rgba(0, 128, 128, 0.18);
+  transform: translateY(-2px);
+}
+
+.group-content .lab-card h2,
+.group-content .lab-card h3 {
+  color: #93f2f2;
+}
+
+.group-content .lab-card p,
+.group-content .lab-card span {
+  color: #bcc7de;
+}
+
+/* ── Tab / pill buttons ── */
+.group-content .tab-btn,
+.group-content .pill-btn {
+  background: #1e293b;
+  border: 1px solid #2a3f5f;
+  color: #bcc7de;
+  border-radius: 9999px;
+  transition: all 180ms ease;
+}
+
+.group-content .tab-btn:hover,
+.group-content .pill-btn:hover {
+  background: #213145;
+  border-color: #008080;
+  color: #93f2f2;
+}
+
+.group-content .tab-btn.active,
+.group-content .pill-btn.active {
+  background: #008080;
+  border-color: #008080;
+  color: #e3fffe;
+  font-weight: 600;
+}
+
+/* ── Primary action buttons ── */
+.group-content .btn-primary,
+.group-content button[type="submit"],
+.group-content .run-btn {
+  background: #008080;
+  color: #e3fffe;
+  border: none;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: background 180ms ease, box-shadow 180ms ease;
+}
+
+.group-content .btn-primary:hover,
+.group-content button[type="submit"]:hover,
+.group-content .run-btn:hover {
+  background: #006565;
+  box-shadow: 0 6px 20px rgba(0, 128, 128, 0.35);
+}
+
+/* ── Input fields ── */
+.group-content input[type="text"],
+.group-content input[type="number"],
+.group-content textarea,
+.group-content select {
+  background: #0f1a29;
+  border: 1px solid #2a3f5f;
+  border-radius: 8px;
+  color: #eaf1ff;
+  caret-color: #008080;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.group-content input[type="text"]:focus,
+.group-content input[type="number"]:focus,
+.group-content textarea:focus,
+.group-content select:focus {
+  border-color: #008080;
+  box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.2);
+  outline: none;
+}
+
+.group-content input::placeholder {
+  color: #3e4949;
+}
+
+/* ── Output / result panel ── */
+.group-content .output-panel,
+.group-content .result-box,
+.group-content pre {
+  background: #0f1a29;
+  border: 1px solid #2a3f5f;
+  border-left: 3px solid #008080;
+  border-radius: 10px;
+  color: #93f2f2;
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+
+/* ── Info / description boxes ── */
+.group-content .info-box,
+.group-content .description-box {
+  background: #1a2640;
+  border: 1px solid #2a3f5f;
+  border-radius: 10px;
+  color: #bcc7de;
+}
+
+/* ── Labels ── */
+.group-content label {
+  color: #7a98c2;
+  font-size: 0.78rem;
+  letter-spacing: 0.5px;
+}
+
+/* ── Dividers ── */
+.group-content hr {
+  border-color: #2a3f5f;
+}
+
+/* ── Scrollbar (webkit) ── */
+.group-content ::-webkit-scrollbar {
+  width: 6px;
+}
+
+.group-content ::-webkit-scrollbar-track {
+  background: #0f1a29;
+}
+
+.group-content ::-webkit-scrollbar-thumb {
+  background: #2a3f5f;
+  border-radius: 9999px;
+}
+
+.group-content ::-webkit-scrollbar-thumb:hover {
+  background: #008080;
+}
+
+/* ── Error states ── */
+.group-content .error-msg,
+.group-content .error {
+  color: #ff8a80;
+  background: rgba(186, 26, 26, 0.12);
+  border: 1px solid rgba(186, 26, 26, 0.3);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+
+.group-content .success-msg,
+.group-content .ok {
+  color: #93f2f2;
+}
+
+/* ── Member badge chips ── */
+.group-content .member-chip,
+.group-content .badge {
+  background: #1e293b;
+  border: 1px solid #2a3f5f;
+  color: #93f2f2;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  padding: 3px 12px;
+}
+
+/* ── Screenshot / image frames ── */
+.group-content .screenshot,
+.group-content .preview-img {
+  border: 1px solid #2a3f5f;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 128, 128, 0.1);
+}
+
+/* ── Selection highlight ── */
+.group-content ::selection {
+  background: rgba(0, 128, 128, 0.35);
+  color: #e3fffe;
+}
