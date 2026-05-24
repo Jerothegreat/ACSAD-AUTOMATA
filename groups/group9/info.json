@@ -1,0 +1,75 @@
+{
+  "group": "Group 9",
+  "members": [
+    "Sarah Luzada",
+    "John Cleford Ricafranca"
+  ],
+  "download": "G9_AUTOMATA-ALGO.zip",
+  "labacts": [
+    {
+      "name": "Collatz Sequence",
+      "file": "CollatzSequence.js",
+      "screenshot": "screenshots/CollatzSequence.png",
+      "description": "Computes all terms of the Collatz sequence from a positive odd integer. Applies 3n+1 for odd terms and n/2 for even terms until reaching 1.",
+      "inputs": [
+        { "label": "Initial Value", "placeholder": "positive odd integer, e.g. 13" }
+      ]
+    },
+    {
+      "name": "Division Algorithm",
+      "file": "DivisionAlgorithm.js",
+      "screenshot": "screenshots/DivisionAlgorithm.png",
+      "description": "Expresses integer division as m = n(q) + r, identifying the dividend, divisor, quotient, and remainder.",
+      "inputs": [
+        { "label": "First Integer",  "placeholder": "positive integer, e.g. 17" },
+        { "label": "Second Integer", "placeholder": "positive integer, e.g. 5"  }
+      ]
+    },
+    {
+      "name": "Euclidean GCD",
+      "file": "EuclideanGCD.js",
+      "screenshot": "screenshots/EuclideanGCD.png",
+      "description": "Finds the Greatest Common Divisor (GCD) and Least Common Multiple (LCM) of two positive integers using the Euclidean algorithm.",
+      "inputs": [
+        { "label": "First Integer",  "placeholder": "positive integer, e.g. 48" },
+        { "label": "Second Integer", "placeholder": "positive integer, e.g. 18" }
+      ]
+    },
+    {
+      "name": "Palindrome Checker",
+      "file": "PalindromeChecker.js",
+      "screenshot": "screenshots/PalindromeChecker.png",
+      "description": "Checks whether a string reads the same forwards and backwards, ignoring spaces and letter case.",
+      "inputs": [
+        { "label": "String", "placeholder": "e.g. racecar" }
+      ]
+    },
+    {
+      "name": "Fibonacci",
+      "file": "Fibonacci.js",
+      "screenshot": "screenshots/Fibonacci.png",
+      "description": "Generates the Fibonacci sequence for a given number of terms. Seed values: F(0)=0, F(1)=1. Input must be greater than 2.",
+      "inputs": [
+        { "label": "Number of Terms", "placeholder": "integer greater than 2, e.g. 10" }
+      ]
+    },
+    {
+      "name": "Lucas",
+      "file": "Lucas.js",
+      "screenshot": "screenshots/Lucas.png",
+      "description": "Generates the Lucas number sequence for a given number of terms. Seed values: L(0)=2, L(1)=1. Input must be greater than 2.",
+      "inputs": [
+        { "label": "Number of Terms", "placeholder": "integer greater than 2, e.g. 10" }
+      ]
+    },
+    {
+      "name": "Tribonacci",
+      "file": "Tribonacci.js",
+      "screenshot": "screenshots/Tribonacci.png",
+      "description": "Generates the Tribonacci sequence for a given number of terms. Seed values: T(0)=0, T(1)=0, T(2)=1. Input must be greater than 3.",
+      "inputs": [
+        { "label": "Number of Terms", "placeholder": "integer greater than 3, e.g. 10" }
+      ]
+    }
+  ]
+}

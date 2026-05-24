@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucas Sequence Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #43e97b;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .description {
+            color: #666;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #43e97b;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+        .result.show {
+            display: block;
+        }
+        .result h3 {
+            color: #43e97b;
+            margin-bottom: 10px;
+        }
+        .result p {
+            color: #333;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+        .error {
+            background: #fee;
+            border-left: 4px solid #f44;
+        }
+        .error h3 {
+            color: #f44;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌟 Lucas Sequence Generator</h1>
+        <p class="description">Generate the Lucas sequence with a specified number of terms</p>
+        
+        <div class="input-group">
+            <label for="numTerms">Number of Terms (positive or negative integer):</label>
+            <input type="number" id="numTerms" placeholder="Enter number of terms (e.g., 10 or -10)">
+            <p style="font-size: 12px; color: #666; margin-top: 5px;">
+                Positive: generates L(0) to L(n-1) | Negative: generates L(n) to L(-1)
+            </p>
+        </div>
+        
+        <button onclick="generateLucas()">Generate Sequence</button>
+        
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function generateLucas() {
+            const input = document.getElementById('numTerms');
+            const resultDiv = document.getElementById('result');
+            const value = input.value.trim();
+            
+            // Validation
+            if (value === '') {
+                showError('Please enter a value');
+                return;
+            }
+            
+            if (value.includes('.')) {
+                showError('Decimals are not allowed. Please enter a whole number.');
+                return;
+            }
+            
+            const n = parseInt(value);
+            
+            if (isNaN(n)) {
+                showError('INVALID OUTPUT: Please enter a valid integer');
+                return;
+            }
+            
+            if (n === 0) {
+                showError('INVALID OUTPUT: Number of terms cannot be zero');
+                return;
+            }
+            
+            // Generate Lucas sequence
+            const sequence = [];
+            
+            if (n > 0) {
+                // Positive: L(0) to L(n-1)
+                let a = 2, b = 1;
+                for (let i = 0; i < n; i++) {
+                    sequence.push(a);
+                    [a, b] = [b, a + b];
+                }
+            } else {
+                // Negative: L(n) to L(-1)
+                // For negative Lucas: L(-n) = (-1)^n * L(n)
+                let a = 2, b = 1;
+                for (let i = 0; i < Math.abs(n); i++) {
+                    sequence.push(a);
+                    [a, b] = [b - a, a];
+                }
+                sequence.reverse();
+            }
+            
+            // Display result
+            const rangeText = n > 0 ? `L(0) to L(${n-1})` : `L(${n}) to L(-1)`;
+            resultDiv.className = 'result show';
+            resultDiv.innerHTML = `
+                <h3>✅ Lucas Sequence</h3>
+                <p><strong>Number of terms:</strong> ${Math.abs(n)}</p>
+                <p><strong>Range:</strong> ${rangeText}</p>
+                <p><strong>Sequence:</strong> ${sequence.join(', ')}</p>
+            `;
+        }
+        
+        function showError(message) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = 'result show error';
+            resultDiv.innerHTML = `
+                <h3>❌ Error</h3>
+                <p>${message}</p>
+            `;
+        }
+        
+        // Allow Enter key to submit
+        document.getElementById('numTerms').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generateLucas();
+            }
+        });
+    </script>
+</body>
+</html>

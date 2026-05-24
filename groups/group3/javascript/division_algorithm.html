@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Division Algorithm</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #f5576c;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .description {
+            color: #666;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #f5576c;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+        .result.show {
+            display: block;
+        }
+        .result h3 {
+            color: #f5576c;
+            margin-bottom: 15px;
+        }
+        .result p {
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 8px;
+        }
+        .error {
+            background: #fee;
+            border-left: 4px solid #f44;
+        }
+        .error h3 {
+            color: #f44;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>➗ Division Algorithm</h1>
+        <p class="description">Calculate quotient and remainder using the division algorithm</p>
+        
+        <div class="input-group">
+            <label for="firstInteger">First Integer (positive):</label>
+            <input type="number" id="firstInteger" placeholder="Enter first positive integer">
+        </div>
+        
+        <div class="input-group">
+            <label for="secondInteger">Second Integer (positive):</label>
+            <input type="number" id="secondInteger" placeholder="Enter second positive integer">
+        </div>
+        
+        <button onclick="calculateDivision()">Calculate</button>
+        
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function validatePositiveInteger(value, fieldName) {
+            if (value === '') {
+                return `Please enter ${fieldName}`;
+            }
+            
+            if (value.includes('.')) {
+                return 'Decimals are not allowed. Please enter a whole number.';
+            }
+            
+            const num = parseInt(value);
+            
+            if (isNaN(num)) {
+                return 'Invalid input. Please enter a positive integer.';
+            }
+            
+            if (num <= 0) {
+                return 'Please enter a positive integer greater than zero.';
+            }
+            
+            return null;
+        }
+        
+        function calculateDivision() {
+            const input1 = document.getElementById('firstInteger').value.trim();
+            const input2 = document.getElementById('secondInteger').value.trim();
+            const resultDiv = document.getElementById('result');
+            
+            // Validate first integer
+            const error1 = validatePositiveInteger(input1, 'the first integer');
+            if (error1) {
+                showError(error1);
+                return;
+            }
+            
+            // Validate second integer
+            const error2 = validatePositiveInteger(input2, 'the second integer');
+            if (error2) {
+                showError(error2);
+                return;
+            }
+            
+            const a = parseInt(input1);
+            const b = parseInt(input2);
+            
+            // Calculate using division algorithm
+            const m = Math.max(a, b);
+            const n = Math.min(a, b);
+            
+            const q = Math.floor(m / n);
+            const r = m % n;
+            
+            // Display result
+            resultDiv.className = 'result show';
+            resultDiv.innerHTML = `
+                <h3>✅ SOLUTION</h3>
+                <p><strong>Formula:</strong> ${m} = ${n}(${q}) + ${r}</p>
+                <p><strong>The dividend is:</strong> ${m}</p>
+                <p><strong>The divisor is:</strong> ${n}</p>
+                <p><strong>The quotient is:</strong> ${q}</p>
+                <p><strong>The remainder is:</strong> ${r}</p>
+            `;
+        }
+        
+        function showError(message) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = 'result show error';
+            resultDiv.innerHTML = `
+                <h3>❌ Error</h3>
+                <p>${message}</p>
+            `;
+        }
+        
+        // Allow Enter key to submit
+        document.getElementById('secondInteger').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateDivision();
+            }
+        });
+    </script>
+</body>
+</html>

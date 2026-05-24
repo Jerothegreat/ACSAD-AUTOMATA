@@ -58,6 +58,15 @@
       "inputs": [
         { "label": "Number of terms", "placeholder": "integer greater than 3, e.g. 7" }
       ]
+    },
+    {
+      "name": "Palindrome",
+      "file": "Palindrome.js",
+      "screenshot": "screenshots/Palindrome.png",
+      "description": "Checks if a given string is a palindrome.",
+      "inputs": [
+        { "label": "Enter String", "placeholder": "e.g. racecar or never odd or even" }
+      ]
     }
   ]
 }

@@ -3,7 +3,11 @@ const PISTON_ENDPOINT = "https://emkc.org/api/v2/piston/execute";
 
 const EXTERNAL_GROUP_URLS = {
   2: "https://group2-automata.vercel.app/",
-  10: "https://group11-finals-automata.netlify.app/",
+  11: "https://group11-finals-automata.netlify.app/",
+};
+
+const HTML_GROUP_URLS = {
+  10: "groups/group10/AUTOMATA_FINAL.html",
 };
 
 const GROUPS = Array.from({ length: GROUP_COUNT }, (_, index) => {
@@ -13,6 +17,7 @@ const GROUPS = Array.from({ length: GROUP_COUNT }, (_, index) => {
     number,
     name: `Group ${number}`,
     externalUrl: EXTERNAL_GROUP_URLS[number] || "",
+    htmlUrl: HTML_GROUP_URLS[number] || "",
   };
 });
 
@@ -179,16 +184,23 @@ function renderGroupButtons() {
   elements.groupList.innerHTML = "";
 
   for (const group of GROUPS) {
-    const button = group.externalUrl ? document.createElement("a") : document.createElement("button");
+    const groupUrl = group.externalUrl || group.htmlUrl;
+    const button = groupUrl ? document.createElement("a") : document.createElement("button");
     const groupNumber = group.number;
 
-    if (group.externalUrl) {
-      button.href = group.externalUrl;
-      button.target = "_blank";
-      button.rel = "noopener noreferrer";
-      button.className = "group-btn group-btn--external";
-      button.dataset.external = "true";
-      button.setAttribute("aria-label", `Open ${group.name} external site in a new tab`);
+    if (groupUrl) {
+      button.href = groupUrl;
+      button.className = group.externalUrl ? "group-btn group-btn--external" : "group-btn";
+
+      if (group.externalUrl) {
+        button.target = "_blank";
+        button.rel = "noopener noreferrer";
+        button.dataset.external = "true";
+        button.setAttribute("aria-label", `Open ${group.name} external site in a new tab`);
+      } else {
+        button.dataset.html = "true";
+        button.setAttribute("aria-label", `Open ${group.name} HTML page`);
+      }
     } else {
       button.type = "button";
       button.className = "group-btn";
@@ -223,7 +235,8 @@ function renderGroupButtons() {
 function setActiveGroupButton(groupNumber) {
   document.querySelectorAll(".group-btn").forEach((button) => {
     const isExternal = button.dataset.external === "true";
-    button.classList.toggle("active", !isExternal && Number(button.dataset.group) === groupNumber);
+    const isHtmlPage = button.dataset.html === "true";
+    button.classList.toggle("active", !isExternal && !isHtmlPage && Number(button.dataset.group) === groupNumber);
   });
 }
 

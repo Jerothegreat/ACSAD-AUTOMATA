@@ -12,7 +12,14 @@ const Tribonacci = (() => {
       return { ok: false, message: "Invalid input — please enter a whole number." };
     }
 
-    const value = Number.parseInt(trimmed, 10);
+    const value = Number(trimmed);
+
+    if (!Number.isSafeInteger(value)) {
+      return {
+        ok: false,
+        message: "Invalid input — the number of terms is too large to generate safely.",
+      };
+    }
 
     if (value <= 0) {
       return { ok: false, message: "Invalid input — please enter a positive integer." };
@@ -25,21 +32,30 @@ const Tribonacci = (() => {
       };
     }
 
-    return { ok: true, message: "" };
+    return { ok: true, message: "", value };
   }
 
   function compute(n) {
-    if (n === 0) return 0n;
-    if (n === 1) return 0n;
-    if (n === 2) return 1n;
-    return compute(n - 1) + compute(n - 2) + compute(n - 3);
+    let first = 0n;
+    let second = 0n;
+    let third = 1n;
+
+    for (let i = 0; i < n; i += 1) {
+      [first, second, third] = [second, third, first + second + third];
+    }
+
+    return first;
   }
 
   function getSequence(terms) {
     const sequence = [];
+    let first = 0n;
+    let second = 0n;
+    let third = 1n;
 
     for (let i = 0; i < terms; i += 1) {
-      sequence.push(compute(i));
+      sequence.push(first);
+      [first, second, third] = [second, third, first + second + third];
     }
 
     return sequence;
@@ -56,7 +72,7 @@ function main(inputs) {
     throw new Error(validation.message);
   }
 
-  const terms = Number.parseInt(String(rawValue).trim(), 10);
+  const terms = validation.value;
   const sequence = Tribonacci.getSequence(terms).map((value) => value.toString());
 
   return [

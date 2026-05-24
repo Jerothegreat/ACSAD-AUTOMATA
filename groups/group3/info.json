@@ -1,0 +1,77 @@
+{
+  "group": "Group 3",
+  "members": [
+    "Christian Josh T. Cortez",
+    "Kwin Gabrille Talattad",
+    "Jhon Jellar Z. Miranda",
+    "John Carlo Santiago"
+  ],
+  "download": "G3_AUTOMATA-ALGO.zip",
+  "labacts": [
+    {
+      "name": "Division Algorithm",
+      "file": "DivAlgo.js",
+      "screenshot": "screenshots/division_algorithm.jpg",
+      "description": "Computes the quotient and remainder for two positive integers using the division algorithm.",
+      "inputs": [
+        { "label": "First Integer (positive)", "placeholder": "e.g. 10" },
+        { "label": "Second Integer (positive)", "placeholder": "e.g. 3" }
+      ]
+    },
+    {
+      "name": "Euclidean Algorithm",
+      "file": "Euclidean.js",
+      "screenshot": "screenshots/euclidean_algorithm.jpg",
+      "description": "Finds the greatest common divisor (GCD) and least common multiple (LCM) of two positive integers using the Euclidean algorithm.",
+      "inputs": [
+        { "label": "First Integer (positive)", "placeholder": "e.g. 48" },
+        { "label": "Second Integer (positive)", "placeholder": "e.g. 18" }
+      ]
+    },
+    {
+      "name": "Collatz Sequence",
+      "file": "Collatz.js",
+      "screenshot": "screenshots/collatz_sequence.jpg",
+      "description": "Generates the Collatz sequence for a positive odd integer. If odd, multiply by 3 and add 1. If even, divide by 2, until reaching 1.",
+      "inputs": [
+        { "label": "Initial Value (odd positive integer)", "placeholder": "e.g. 27" }
+      ]
+    },
+    {
+      "name": "Fibonacci Sequence",
+      "file": "Fibonacci.js",
+      "screenshot": "screenshots/fibonacci_sequence.jpg",
+      "description": "Generates the Fibonacci sequence for a given number of terms. Supports both positive (F(0) to F(n-1)) and negative (F(n) to F(-1)) ranges.",
+      "inputs": [
+        { "label": "Number of Terms (positive or negative)", "placeholder": "e.g. 10 or -10" }
+      ]
+    },
+    {
+      "name": "Lucas Sequence",
+      "file": "Lucas.js",
+      "screenshot": "screenshots/lucas_sequence.jpg",
+      "description": "Generates the Lucas sequence for a given number of terms. Supports both positive (L(0) to L(n-1)) and negative (L(n) to L(-1)) ranges.",
+      "inputs": [
+        { "label": "Number of Terms (positive or negative)", "placeholder": "e.g. 10 or -10" }
+      ]
+    },
+    {
+      "name": "Tribonacci Sequence",
+      "file": "Tribonacci.js",
+      "screenshot": "screenshots/tribonacci_sequence.jpg",
+      "description": "Generates the Tribonacci sequence for a given number of terms. Supports both positive (T(0) to T(n-1)) and negative (T(n) to T(-1)) ranges.",
+      "inputs": [
+        { "label": "Number of Terms (positive or negative)", "placeholder": "e.g. 10 or -10" }
+      ]
+    },
+    {
+      "name": "Palindrome Checker",
+      "file": "Palindrome.js",
+      "screenshot": "screenshots/palindrome_checker.jpg",
+      "description": "Checks whether a given text is a palindrome. Automatically ignores spaces, punctuation, and case differences.",
+      "inputs": [
+        { "label": "Enter Text", "placeholder": "e.g. racecar, A man a plan a canal Panama" }
+      ]
+    }
+  ]
+}

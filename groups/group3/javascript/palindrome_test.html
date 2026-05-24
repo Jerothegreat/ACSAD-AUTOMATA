@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindrome Checker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #a8edea;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .description {
+            color: #666;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #a8edea;
+        }
+        .options {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .checkbox-group:last-child {
+            margin-bottom: 0;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .checkbox-group label {
+            margin-bottom: 0;
+            cursor: pointer;
+            font-weight: normal;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+        .result.show {
+            display: block;
+        }
+        .result h3 {
+            color: #a8edea;
+            margin-bottom: 15px;
+        }
+        .result p {
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 8px;
+        }
+        .result .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+        }
+        .palindrome-yes {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+        .palindrome-yes h3 {
+            color: #28a745;
+        }
+        .palindrome-no {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        .palindrome-no h3 {
+            color: #dc3545;
+        }
+        .error {
+            background: #fee;
+            border-left: 4px solid #f44;
+        }
+        .error h3 {
+            color: #f44;
+        }
+        .examples {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e7f3ff;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+        .examples h4 {
+            color: #0066cc;
+            margin-bottom: 10px;
+        }
+        .examples ul {
+            margin-left: 20px;
+        }
+        .examples li {
+            margin-bottom: 5px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Palindrome Checker</h1>
+        <p class="description">Check if a word, phrase, or number is a palindrome</p>
+        
+        <div class="input-group">
+            <label for="textInput">Enter Text:</label>
+            <input type="text" id="textInput" placeholder="e.g., racecar, A man a plan a canal Panama">
+        </div>
+        
+        <div class="options">
+            <h4 style="margin-bottom: 10px; color: #333;">Options:</h4>
+            <div class="checkbox-group">
+                <input type="checkbox" id="ignoreSpaces" checked>
+                <label for="ignoreSpaces">Ignore spaces</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="ignoreCase" checked>
+                <label for="ignoreCase">Ignore case (uppercase/lowercase)</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="ignorePunctuation" checked>
+                <label for="ignorePunctuation">Ignore punctuation</label>
+            </div>
+        </div>
+        
+        <button onclick="checkPalindrome()">Check Palindrome</button>
+        
+        <div id="result" class="result"></div>
+        
+        <div class="examples">
+            <h4>📝 Examples of Palindromes:</h4>
+            <ul>
+                <li><strong>Words:</strong> racecar, level, radar, madam, noon</li>
+                <li><strong>Numbers:</strong> 121, 12321, 1001</li>
+                <li><strong>Phrases:</strong> A man a plan a canal Panama</li>
+                <li><strong>Sentences:</strong> Was it a car or a cat I saw?</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function checkPalindrome() {
+            const input = document.getElementById('textInput');
+            const resultDiv = document.getElementById('result');
+            const text = input.value;
+            
+            // Validation
+            if (text.trim() === '') {
+                showError('Please enter a text to check');
+                return;
+            }
+            
+            // Get options
+            const ignoreSpaces = document.getElementById('ignoreSpaces').checked;
+            const ignoreCase = document.getElementById('ignoreCase').checked;
+            const ignorePunctuation = document.getElementById('ignorePunctuation').checked;
+            
+            // Clean the text based on options
+            let cleanedText = text;
+            
+            if (ignoreSpaces) {
+                cleanedText = cleanedText.replace(/\s+/g, '');
+            }
+            
+            if (ignorePunctuation) {
+                cleanedText = cleanedText.replace(/[^\w\s]|_/g, '');
+            }
+            
+            if (ignoreCase) {
+                cleanedText = cleanedText.toLowerCase();
+            }
+            
+            // Check if palindrome
+            const reversedText = cleanedText.split('').reverse().join('');
+            const isPalindrome = cleanedText === reversedText;
+            
+            // Display result
+            if (isPalindrome) {
+                resultDiv.className = 'result show palindrome-yes';
+                resultDiv.innerHTML = `
+                    <h3>✅ YES! It's a Palindrome!</h3>
+                    <p><strong>Original text:</strong></p>
+                    <div class="highlight">${escapeHtml(text)}</div>
+                    <p><strong>Processed text:</strong></p>
+                    <div class="highlight">${escapeHtml(cleanedText)}</div>
+                    <p><strong>Reversed:</strong></p>
+                    <div class="highlight">${escapeHtml(reversedText)}</div>
+                    <p style="margin-top: 15px;">✓ The text reads the same forwards and backwards!</p>
+                `;
+            } else {
+                resultDiv.className = 'result show palindrome-no';
+                resultDiv.innerHTML = `
+                    <h3>❌ NO, It's Not a Palindrome</h3>
+                    <p><strong>Original text:</strong></p>
+                    <div class="highlight">${escapeHtml(text)}</div>
+                    <p><strong>Processed text:</strong></p>
+                    <div class="highlight">${escapeHtml(cleanedText)}</div>
+                    <p><strong>Reversed:</strong></p>
+                    <div class="highlight">${escapeHtml(reversedText)}</div>
+                    <p style="margin-top: 15px;">✗ The text does NOT read the same forwards and backwards.</p>
+                `;
+            }
+        }
+        
+        function showError(message) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = 'result show error';
+            resultDiv.innerHTML = `
+                <h3>❌ Error</h3>
+                <p>${message}</p>
+            `;
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Allow Enter key to submit
+        document.getElementById('textInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPalindrome();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -12,7 +12,14 @@ const Fibonacci = (() => {
       return { ok: false, message: "Invalid input — please enter a whole number." };
     }
 
-    const value = Number.parseInt(trimmed, 10);
+    const value = Number(trimmed);
+
+    if (!Number.isSafeInteger(value)) {
+      return {
+        ok: false,
+        message: "Invalid input — the number of terms is too large to generate safely.",
+      };
+    }
 
     if (value <= 0) {
       return { ok: false, message: "Invalid input — please enter a positive integer." };
@@ -25,20 +32,28 @@ const Fibonacci = (() => {
       };
     }
 
-    return { ok: true, message: "" };
+    return { ok: true, message: "", value };
   }
 
   function compute(n) {
-    if (n === 0) return 0n;
-    if (n === 1) return 1n;
-    return compute(n - 1) + compute(n - 2);
+    let previous = 0n;
+    let current = 1n;
+
+    for (let i = 0; i < n; i += 1) {
+      [previous, current] = [current, previous + current];
+    }
+
+    return previous;
   }
 
   function getSequence(terms) {
     const sequence = [];
+    let previous = 0n;
+    let current = 1n;
 
     for (let i = 0; i < terms; i += 1) {
-      sequence.push(compute(i));
+      sequence.push(previous);
+      [previous, current] = [current, previous + current];
     }
 
     return sequence;
@@ -55,7 +70,7 @@ function main(inputs) {
     throw new Error(validation.message);
   }
 
-  const terms = Number.parseInt(String(rawValue).trim(), 10);
+  const terms = validation.value;
   const sequence = Fibonacci.getSequence(terms).map((value) => value.toString());
 
   return [

@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS Programs Suite</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --surface: #fafafa;
+    --surface2: #f4f4f5;
+    --border: #e4e4e7;
+    --border-strong: #d1d1d6;
+    --pink: #f0396e;
+    --pink-light: #fff0f4;
+    --pink-mid: #ffd6e3;
+    --text: #09090b;
+    --muted: #71717a;
+    --error: #dc2626;
+    --success: #16a34a;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background:
+      radial-gradient(circle at 12% 12%, rgba(240,57,110,0.16), transparent 28%),
+      radial-gradient(circle at 88% 18%, rgba(124,58,237,0.12), transparent 26%),
+      radial-gradient(circle at 50% 95%, rgba(22,163,74,0.08), transparent 30%),
+      linear-gradient(90deg, rgba(240,57,110,0.035) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(240,57,110,0.035) 1px, transparent 1px),
+      var(--bg);
+    background-size: auto, auto, auto, 42px 42px, 42px 42px;
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 20px;
+    position: relative;
+    overflow-x: hidden;
+    animation: pageGlow 9s ease-in-out infinite alternate;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: -20%;
+    z-index: -1;
+    background:
+      conic-gradient(from 120deg at 50% 50%, transparent 0 28%, rgba(240,57,110,0.08) 34%, transparent 42%, rgba(124,58,237,0.07) 58%, transparent 72%);
+    filter: blur(34px);
+    opacity: 0.8;
+    animation: auroraSpin 18s linear infinite;
+    pointer-events: none;
+  }
+
+  .sparkle-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .sparkle,
+  .trail-dot,
+  .confetti,
+  .firework {
+    position: fixed;
+    pointer-events: none;
+    border-radius: 999px;
+    transform: translate(-50%, -50%);
+    will-change: transform, opacity;
+  }
+
+  .sparkle {
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, #fff 0 18%, var(--pink) 35%, rgba(240,57,110,0) 72%);
+    box-shadow: 0 0 12px rgba(240,57,110,0.7), 0 0 24px rgba(124,58,237,0.28);
+    animation: sparkleBurst 0.85s ease-out forwards;
+  }
+
+  .sparkle::before,
+  .sparkle::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 14px;
+    height: 2px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.9);
+    transform: translate(-50%, -50%);
+  }
+
+  .sparkle::after { transform: translate(-50%, -50%) rotate(90deg); }
+
+  .trail-dot {
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, rgba(255,255,255,0.95), rgba(240,57,110,0.8) 45%, rgba(124,58,237,0) 76%);
+    box-shadow: 0 0 18px rgba(240,57,110,0.42);
+    animation: trailFade 0.55s ease-out forwards;
+  }
+
+  .confetti {
+    width: 7px;
+    height: 13px;
+    border-radius: 2px;
+    background: var(--c);
+    box-shadow: 0 0 14px color-mix(in srgb, var(--c), transparent 35%);
+    animation: confettiBlast 1.15s cubic-bezier(.16,.8,.28,1) forwards;
+  }
+
+  .firework {
+    width: 5px;
+    height: 5px;
+    background: var(--c);
+    box-shadow: 0 0 12px var(--c), 0 0 26px color-mix(in srgb, var(--c), transparent 30%);
+    animation: fireworkFly 0.72s ease-out forwards;
+  }
+
+  .ambient-star {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    z-index: 9998;
+    pointer-events: none;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 0 14px rgba(240,57,110,0.65);
+    animation: ambientDrift 4.2s ease-in forwards;
+  }
+
+  .wrapper {
+    width: 100%;
+    max-width: 820px;
+    animation: wrapperIn 0.65s cubic-bezier(.2,.8,.2,1) both;
+  }
+
+  header { text-align: center; margin-bottom: 52px; animation: floatIn 0.7s cubic-bezier(.2,.8,.2,1) both; }
+  header .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 14px;
+  }
+  header h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    text-shadow: 0 10px 30px rgba(240,57,110,0.16);
+  }
+  header h1 span {
+    color: var(--pink);
+    background: linear-gradient(90deg, var(--pink), #ff78a0, var(--pink));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textShine 4s ease-in-out infinite, titleBoom 3.2s ease-in-out infinite;
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 40px;
+    height: 2px;
+    background: var(--pink);
+    margin: 20px auto 0;
+    border-radius: 2px;
+    transform-origin: center;
+    box-shadow: 0 0 18px rgba(240,57,110,0.65), 0 0 34px rgba(240,57,110,0.25);
+    animation: dividerPulse 1.7s ease-in-out infinite;
+  }
+
+  /* MAIN MENU */
+  #main-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .program-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  .menu-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 18px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 0 rgba(240,57,110,0);
+    transform: translateY(0);
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .menu-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.75) 45%, transparent 65%);
+    transform: translateX(-120%);
+    transition: transform 0.5s ease;
+    pointer-events: none;
+  }
+  .menu-btn:hover {
+    border-color: var(--pink);
+    background: var(--pink-light);
+    box-shadow: 0 16px 34px rgba(240,57,110,0.18), 0 0 0 4px rgba(240,57,110,0.07);
+    transform: translateY(-5px) scale(1.015);
+  }
+  .menu-btn:hover::before { transform: translateX(120%); }
+  .menu-btn:active { transform: translateY(-1px) scale(0.99); }
+  .menu-btn:hover .num { color: var(--pink); }
+  #main-menu:hover .menu-btn:not(:hover),
+  .program-menu:hover .menu-btn:not(:hover) {
+    transform: scale(0.985);
+    opacity: 0.78;
+  }
+  .menu-btn .num {
+    display: block;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+  }
+  .menu-btn .badge {
+    position: relative;
+    float: right;
+    background: var(--pink);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 99px;
+    margin-top: 1px;
+    display: none;
+  }
+  .menu-btn .badge.visible { display: inline-block; animation: badgePop 0.32s cubic-bezier(.2,1.4,.3,1) both; }
+  .menu-btn .badge.visible::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    border: 1px solid rgba(240,57,110,0.35);
+    animation: badgeRing 1.5s ease-out infinite;
+  }
+
+  .menu-btn.exit-btn { grid-column: 1 / -1; background: #fafafa; }
+  .menu-btn.exit-btn:hover { border-color: var(--error); background: #fff5f5; }
+  .menu-btn.exit-btn .num { color: var(--error); }
+
+  .menu-btn.history-btn { grid-column: 1 / -1; background: var(--pink-light); border-color: var(--pink-mid); }
+  .menu-btn.history-btn:hover { border-color: var(--pink); }
+  .menu-btn.history-btn .num { color: var(--pink); }
+
+  /* PANELS */
+  .panel { display: none; animation: panelIn 0.34s cubic-bezier(.2,.8,.2,1); }
+  .panel.active { display: block; }
+
+  .panel-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .back-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 7px 14px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: transform 0.18s ease, border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+    white-space: nowrap;
+  }
+  .back-btn:hover { border-color: var(--text); color: var(--text); transform: translateX(-2px); background: var(--surface); }
+
+  .panel-title { font-size: 1.25rem; font-weight: 600; color: var(--text); letter-spacing: -0.02em; }
+  .panel-title span {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 400;
+    color: var(--pink);
+    display: block;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 14px 38px rgba(9,9,11,0.055);
+    animation: floatIn 0.42s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255,255,255,0.75), transparent 28%, rgba(240,57,110,0.045));
+    pointer-events: none;
+  }
+  .card > * { position: relative; }
+
+  /* INPUTS */
+  .field { margin-bottom: 16px; }
+  .field label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 7px;
+    text-transform: uppercase;
+  }
+  .field input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    border-radius: 7px;
+    outline: none;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+  }
+  .field input:focus { border-color: var(--pink); box-shadow: 0 0 0 3px var(--pink-mid); transform: translateY(-1px); }
+
+  /* BUTTONS */
+  .btn-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+  .run-btn {
+    background: var(--pink);
+    color: #fff;
+    border: none;
+    font-family: var(--sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 10px 28px;
+    border-radius: 7px;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(240,57,110,0.22);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    letter-spacing: 0.01em;
+  }
+  .run-btn::after {
+    content: "";
+    position: absolute;
+    inset: -60% -20%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
+    transform: translateX(-120%) rotate(12deg);
+    transition: transform 0.55s ease;
+  }
+  .run-btn:hover {
+    background: #e0255f;
+    box-shadow: 0 16px 34px rgba(240,57,110,0.36), 0 0 0 5px rgba(240,57,110,0.1);
+    transform: translateY(-3px) scale(1.025);
+  }
+  .run-btn:hover::after { transform: translateX(120%) rotate(12deg); }
+  .run-btn:active { transform: scale(0.98); }
+
+  .reset-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 10px 16px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: transform 0.18s ease, border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+  }
+  .reset-btn:hover { border-color: var(--border-strong); color: var(--text); background: var(--bg); transform: translateY(-2px); }
+
+  /* OUTPUT */
+  .output {
+    margin-top: 20px;
+    padding: 16px 18px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    line-height: 1.9;
+    white-space: pre-wrap;
+    min-height: 52px;
+    display: none;
+  }
+  .output.show { display: block; animation: outputReveal 0.34s cubic-bezier(.2,.8,.2,1) both; }
+  .output.show::before {
+    content: "";
+    display: block;
+    height: 2px;
+    margin: -4px 0 10px;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--pink), #7c3aed, var(--success), var(--pink));
+    background-size: 220% auto;
+    animation: resultBar 2s linear infinite;
+  }
+  .output .ok, .hist-status.s-ok { animation: successPulse 1.6s ease-in-out infinite; }
+  .output .err, .hist-status.s-err { animation: errorPulse 1.1s ease-in-out 2; }
+  .output .err { color: var(--error); }
+  .output .ok  { color: var(--success); }
+  .output .hi  { color: var(--pink); font-weight: 500; }
+  .output .acc { color: #7c3aed; }
+
+  /* PER-PROGRAM HISTORY */
+  .hist-section { margin-top: 20px; }
+  .hist-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .hist-section-title {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .hist-clear-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 9px;
+    padding: 3px 9px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.18s ease, border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+  }
+  .hist-clear-btn:hover { border-color: var(--error); color: var(--error); transform: translateY(-1px); }
+
+  .hist-empty {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--muted);
+    padding: 8px 0;
+  }
+  .hist-list { display: flex; flex-direction: column; gap: 6px; }
+
+  .hist-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  .hist-item:hover { border-color: var(--border-strong); box-shadow: 0 8px 18px rgba(9,9,11,0.05); transform: translateY(-1px); }
+
+  .hist-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 12px;
+    cursor: pointer;
+    user-select: none;
+    gap: 8px;
+  }
+  .hist-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+  }
+  .hist-run-num {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--pink);
+    background: var(--pink-light);
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .hist-input-preview {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+  .hist-status {
+    font-family: var(--mono);
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .hist-status.s-ok  { background: #f0fdf4; color: var(--success); }
+  .hist-status.s-err { background: #fef2f2; color: var(--error); }
+
+  .hist-time {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .hist-chevron {
+    font-size: 9px;
+    color: var(--muted);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .hist-item.open .hist-chevron { transform: rotate(180deg); }
+
+  .hist-item-body {
+    display: none;
+    padding: 9px 12px 11px;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .hist-item.open .hist-item-body { display: block; animation: historyReveal 0.24s ease both; }
+  .hist-item-body .err { color: var(--error); }
+  .hist-item-body .ok  { color: var(--success); }
+  .hist-item-body .hi  { color: var(--pink); font-weight: 500; }
+  .hist-item-body .acc { color: #7c3aed; }
+
+  /* OVERALL HISTORY */
+  .overall-filter {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+  .filter-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+  }
+  .filter-btn:hover { transform: translateY(-1px); }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--pink);
+    border-color: var(--pink);
+    color: #fff;
+  }
+  .overall-clear-all {
+    margin-left: auto;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.18s ease, border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+  }
+  .overall-clear-all:hover { border-color: var(--error); color: var(--error); transform: translateY(-1px); }
+
+  .overall-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .overall-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  .overall-item:hover { border-color: var(--border-strong); box-shadow: 0 8px 18px rgba(9,9,11,0.05); transform: translateY(-1px); }
+  .overall-item-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .overall-item-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+  }
+  .prog-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    background: var(--pink-light);
+    color: var(--pink);
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border: 1px solid var(--pink-mid);
+  }
+  .overall-item-body {
+    display: none;
+    padding: 11px 14px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    background: var(--surface);
+  }
+  .overall-item.open .overall-item-body { display: block; animation: historyReveal 0.24s ease both; }
+  .overall-item.open .hist-chevron { transform: rotate(180deg); }
+  .overall-item-body .err { color: var(--error); }
+  .overall-item-body .ok  { color: var(--success); }
+  .overall-item-body .hi  { color: var(--pink); font-weight: 500; }
+  .overall-item-body .acc { color: #7c3aed; }
+
+  /* DESCRIPTION BOX */
+  .description-box {
+    background: var(--pink-light);
+    border-left: 2px solid var(--pink);
+    border-radius: 0 7px 7px 0;
+    padding: 13px 16px;
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: var(--muted);
+    margin-bottom: 18px;
+    animation: floatIn 0.36s cubic-bezier(.2,.8,.2,1) both;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .description-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(240,57,110,0.08);
+  }
+  .description-box strong { color: var(--text); font-weight: 600; }
+  .formula-line {
+    display: block;
+    margin: 10px 0;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .definition-list {
+    margin: 10px 0 0 18px;
+    padding-left: 12px;
+  }
+  .definition-list li { margin-bottom: 8px; }
+
+  /* NOTE INLINE */
+  .note-inline {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 18px;
+    line-height: 1.6;
+  }
+  .note-inline em { color: var(--pink); font-style: normal; font-weight: 500; }
+
+  /* EXIT */
+  .exit-screen { text-align: center; padding: 80px 20px; animation: exitIn 0.55s cubic-bezier(.2,.8,.2,1) both; position: relative; }
+  .exit-screen::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 30px;
+    width: 180px;
+    height: 180px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,57,110,0.2), transparent 65%);
+    animation: exitGlow 2s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .exit-screen::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 38px;
+    width: 240px;
+    height: 240px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background:
+      repeating-conic-gradient(from 0deg, rgba(240,57,110,0.18) 0 8deg, transparent 8deg 18deg);
+    mask: radial-gradient(circle, transparent 0 42%, #000 43% 45%, transparent 46%);
+    animation: exitHaloSpin 4s linear infinite;
+    pointer-events: none;
+  }
+  .exit-screen h2 { font-size: 1.6rem; font-weight: 600; color: var(--muted); margin-bottom: 10px; letter-spacing: -0.02em; position: relative; }
+  .exit-screen p  { color: var(--muted); font-size: 0.875rem; }
+
+  #main-menu .menu-btn,
+  .program-menu .menu-btn {
+    animation: menuRise 0.5s cubic-bezier(.2,.8,.2,1) both;
+  }
+  #main-menu .menu-btn:nth-child(1), .program-menu .menu-btn:nth-child(1) { animation-delay: 0.05s; }
+  #main-menu .menu-btn:nth-child(2), .program-menu .menu-btn:nth-child(2) { animation-delay: 0.1s; }
+  #main-menu .menu-btn:nth-child(3), .program-menu .menu-btn:nth-child(3) { animation-delay: 0.15s; }
+  #main-menu .menu-btn:nth-child(4) { animation-delay: 0.2s; }
+  #main-menu .menu-btn:nth-child(5) { animation-delay: 0.25s; }
+  #main-menu .menu-btn:nth-child(6) { animation-delay: 0.3s; }
+  #main-menu .menu-btn:nth-child(7) { animation-delay: 0.35s; }
+
+  @keyframes pageGlow {
+    from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+    to { background-position: 0 0, 0 0, 0 0, 42px 18px, 18px 42px; }
+  }
+  @keyframes auroraSpin {
+    from { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.08); }
+    to { transform: rotate(360deg) scale(1); }
+  }
+  @keyframes wrapperIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes floatIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes menuRise {
+    from { opacity: 0; transform: translateY(22px) scale(0.94) rotateX(12deg); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes panelIn {
+    from { opacity: 0; transform: translateY(14px) scale(0.992); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes outputReveal {
+    from { opacity: 0; transform: translateY(-6px); clip-path: inset(0 0 100% 0); }
+    to { opacity: 1; transform: translateY(0); clip-path: inset(0 0 0 0); }
+  }
+  @keyframes historyReveal {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes badgePop {
+    from { opacity: 0; transform: scale(0.4); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes badgeRing {
+    from { opacity: 0.9; transform: scale(0.82); }
+    to { opacity: 0; transform: scale(1.9); }
+  }
+  @keyframes dividerPulse {
+    0%, 100% { transform: scaleX(1); opacity: 0.8; }
+    50% { transform: scaleX(2.15); opacity: 1; }
+  }
+  @keyframes textShine {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+  }
+  @keyframes resultBar {
+    from { background-position: 0% center; }
+    to { background-position: 220% center; }
+  }
+  @keyframes exitGlow {
+    0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(0.9); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.15); }
+  }
+  @keyframes sparkleBurst {
+    from { opacity: 1; transform: translate(-50%, -50%) scale(0.3) rotate(0deg); }
+    to { opacity: 0; transform: translate(calc(-50% + var(--sx)), calc(-50% + var(--sy))) scale(1.8) rotate(180deg); }
+  }
+  @keyframes trailFade {
+    from { opacity: 0.95; transform: translate(-50%, -50%) scale(1); }
+    to { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+  }
+  @keyframes confettiBlast {
+    from { opacity: 1; transform: translate(-50%, -50%) translate(0,0) rotate(0deg) scale(1); }
+    to { opacity: 0; transform: translate(-50%, -50%) translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.75); }
+  }
+  @keyframes fireworkFly {
+    from { opacity: 1; transform: translate(-50%, -50%) translate(0,0) scale(1); }
+    to { opacity: 0; transform: translate(-50%, -50%) translate(var(--tx), var(--ty)) scale(0.2); }
+  }
+  @keyframes ambientDrift {
+    from { opacity: 0; transform: translateY(0) scale(0.5); }
+    18% { opacity: 0.95; }
+    to { opacity: 0; transform: translateY(-120px) scale(1.4); }
+  }
+  @keyframes successPulse {
+    0%, 100% { filter: drop-shadow(0 0 0 rgba(22,163,74,0)); }
+    50% { filter: drop-shadow(0 0 8px rgba(22,163,74,0.35)); }
+  }
+  @keyframes errorPulse {
+    0%, 100% { filter: drop-shadow(0 0 0 rgba(220,38,38,0)); }
+    50% { filter: drop-shadow(0 0 8px rgba(220,38,38,0.35)); }
+  }
+  @keyframes titleBoom {
+    0%, 100% { filter: drop-shadow(0 0 0 rgba(240,57,110,0)); }
+    50% { filter: drop-shadow(0 0 16px rgba(240,57,110,0.42)); }
+  }
+  @keyframes exitHaloSpin {
+    from { transform: translateX(-50%) rotate(0deg); opacity: 0.7; }
+    to { transform: translateX(-50%) rotate(360deg); opacity: 0.7; }
+  }
+  @keyframes exitIn {
+    from { opacity: 0; transform: translateY(18px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="sparkle-layer" id="sparkle-layer" aria-hidden="true"></div>
+<div class="wrapper">
+
+<header>
+    <div class="label">GROUP 10</div>
+
+    <div class="label" 
+         style="letter-spacing:1px; margin-top:-6px; color:var(--muted); font-size:10px; line-height:1.6;">
+        Bartolay, Jasmine Kate C.<br>
+        Magpantay, Althea T.<br>
+        Ogoc, Emmarlon E.
+    </div>
+
+    <div class="label" 
+         style="margin-top:10px; color:var(--muted); font-size:10px; letter-spacing:1px;">
+        Professor: Lester G. Diampoc
+    </div>
+
+    <h1>FINAL PROJECT IN <span>AUTOMATA</span></h1>
+
+    <div class="divider"></div>
+</header>
+
+  <!-- MAIN MENU -->
+  <div id="main-menu">
+    <button class="menu-btn" onclick="show('p1')">
+      <span class="num">Program 01</span>Palindrome Checker
+      <span class="badge" id="badge-p1">0</span>
+    </button>
+    <button class="menu-btn" onclick="show('p2')">
+      <span class="num">Program 02</span>Division Algorithm
+      <span class="badge" id="badge-p2">0</span>
+    </button>
+    <button class="menu-btn" onclick="show('p3')">
+      <span class="num">Program 03</span>GCD &amp; LCM (Euclidean)
+      <span class="badge" id="badge-p3">0</span>
+    </button>
+    <button class="menu-btn" onclick="show('p4')">
+      <span class="num">Program 04</span>Collatz Sequence
+      <span class="badge" id="badge-p4">0</span>
+    </button>
+    <button class="menu-btn" onclick="show('recursions')">
+      <span class="num">Programs 05-07</span>Recursions
+      <span class="badge" id="badge-recursions">0</span>
+    </button>
+    <button class="menu-btn history-btn" onclick="show('overall')">
+      <span class="num">Overall History</span>All Runs — Full Log
+      <span class="badge" id="badge-overall" style="background:var(--pink);">0</span>
+    </button>
+    <button class="menu-btn exit-btn" onclick="show('exit')">
+      <span class="num">Exit</span>Quit Program
+    </button>
+  </div>
+
+  <!-- RECURSIONS MENU -->
+  <div class="panel" id="recursions">
+    <div class="panel-header">
+      <button class="back-btn" onclick="back()">← Menu</button>
+      <div class="panel-title"><span>Programs 05-07</span>Recursions</div>
+    </div>
+    <div class="card">
+      <div class="description-box">
+        <strong>Recursive Sequence</strong><br>
+        A sequence <span class="formula-line">a<sub>1</sub>, a<sub>2</sub>, a<sub>3</sub>, ..., a<sub>n</sub>, ...</span>
+        is defined by initial values and a recursion rule.
+        <ol class="definition-list">
+          <li>A number of terms of the sequence, a<sub>1</sub>, a<sub>2</sub>, ..., a<sub>r</sub>, are given. These are the initial values.</li>
+          <li>A rule called the recursion is given, which explains how a<sub>n</sub> is computed in terms of previous terms in the sequence, if n &gt; r.</li>
+        </ol>
+        The terms of a recursive sequence can be numbers, graphs, or other objects.
+      </div>
+      <div class="description-box">
+        <strong>The Fibonacci Numbers</strong><br>
+        The Fibonacci Numbers F<sub>n</sub> have the initial values
+        <span class="formula-line">F<sub>0</sub> = 0, F<sub>1</sub> = 1</span>
+        <strong>And the recursion:</strong>
+        <span class="formula-line">F<sub>n</sub> = F<sub>n-1</sub> + F<sub>n-2</sub></span>
+        If n &ge; 2.
+      </div>
+      <div class="description-box">
+        <strong>Lucas Numbers</strong><br>
+        The Lucas Numbers L<sub>n</sub> have the initial values
+        <span class="formula-line">L<sub>0</sub> = 2, L<sub>1</sub> = 1</span>
+        <strong>And the recursion:</strong>
+        <span class="formula-line">L<sub>n</sub> = L<sub>n-1</sub> + L<sub>n-2</sub></span>
+        If n &ge; 2.
+      </div>
+      <div class="description-box">
+        <strong>The Tribonacci Number</strong><br>
+        The Tribonacci Numbers T<sub>n</sub> have the initial values
+        <span class="formula-line">T<sub>0</sub> = 0, T<sub>1</sub> = 0, T<sub>2</sub> = 1</span>
+        <strong>And the recursion:</strong>
+        <span class="formula-line">T<sub>n</sub> = T<sub>n-1</sub> + T<sub>n-2</sub> + T<sub>n-3</sub></span>
+        If n &ge; 3.
+      </div>
+    </div>
+    <div class="program-menu">
+      <button class="menu-btn" onclick="show('p5')">
+        <span class="num">Program 05</span>Fibonacci Numbers
+        <span class="badge" id="badge-p5">0</span>
+      </button>
+      <button class="menu-btn" onclick="show('p6')">
+        <span class="num">Program 06</span>Lucas Numbers
+        <span class="badge" id="badge-p6">0</span>
+      </button>
+      <button class="menu-btn" onclick="show('p7')">
+        <span class="num">Program 07</span>Tribonacci Numbers
+        <span class="badge" id="badge-p7">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- PROGRAM 1 -->
+  <div class="panel" id="p1">
+    <div class="panel-header">
+      <button class="back-btn" onclick="back()">← Menu</button>
+      <div class="panel-title"><span>Program 01</span>Palindrome Checker</div>
+    </div>
+    <div class="card">
+      <div class="field">
+        <label>Enter a String</label>
+        <input type="text" id="p1-input" placeholder="e.g. Top spot" maxlength="200" />
+      </div>
+      <div class="btn-row">
+        <button class="run-btn" onclick="runP1()">Run</button>
+        <button class="reset-btn" onclick="resetPanel('p1-input','p1-out')">↺ Reset</button>
+      </div>
+      <div class="output" id="p1-out"></div>
+    </div>
+    <div class="hist-section">
+      <div class="hist-section-header">
+        <div class="hist-section-title">Run History</div>
+        <button class="hist-clear-btn" onclick="clearProgramHistory('p1')">Clear</button>
+      </div>
+      <div class="hist-empty" id="hist-p1-empty">No runs yet.</div>
+      <div class="hist-list" id="hist-p1-list"></div>
+    </div>
+  </div>
+
+  <!-- PROGRAM 2 -->
+  <div class="panel" id="p2">
+    <div class="panel-header">
+      <button class="back-btn" onclick="back()">← Menu</button>
+      <div class="panel-title"><span>Program 02</span>Division Algorithm</div>
+    </div>
+    <div class="card">
+      <div class="field">
+        <label>First Positive Integer</label>
+        <input type="text" id="p2-a" placeholder="e.g. 21" inputmode="numeric" pattern="[0-9]*" maxlength="16" />
+      </div>
+      <div class="field">
+        <label>Second Positive Integer</label>
+        <input type="text" id="p2-b" placeholder="e.g. 4" inputmode="numeric" pattern="[0-9]*" maxlength="16" />
+      </div>
+      <div class="btn-row">
+        <button class="run-btn" onclick="runP2()">Run</button>
+        <button class="reset-btn" onclick="resetPanel('p2-a','p2-b','p2-out')">↺ Reset</button>
+      </div>
+      <div class="output" id="p2-out"></div>
+    </div>
+    <div class="hist-section">
+      <div class="hist-section-header">
+        <div class="hist-section-title">Run History</div>
+        <button class="hist-clear-btn" onclick="clearProgramHistory('p2')">Clear</button>
+      </div>
+      <div class="hist-empty" id="hist-p2-empty">No runs yet.</div>
+      <div class="hist-list" id="hist-p2-list"></div>
+    </div>
+  </div>
+
+  <!-- PROGRAM 3 -->
+  <div class="panel" id="p3">
+    <div class="panel-header">
+      <button class="back-btn" onclick="back()">← Menu</button>
+      <div class="panel-title"><span>Program 03</span>GCD &amp; LCM — Euclidean</div>
+    </div>
+    <div class="card">
+      <div class="field">
+        <label>First Positive Integer</label>
+        <input type="text" id="p3-a" placeholder="e.g. 13" inputmode="numeric" pattern="[0-9]*" maxlength="16" />
+      </div>
+      <div class="field">
+        <label>Second Positive Integer</label>
+        <input type="text" id="p3-b" placeholder="e.g. 8" inputmode="numeric" pattern="[0-9]*" maxlength="16" />
+      </div>
+      <div class="btn-row">
+        <button class="run-btn" onclick="runP3()">Run</button>
+        <button class="reset-btn" onclick="resetPanel('p3-a','p3-b','p3-out')">↺ Reset</button>
+      </div>
+      <div class="output" id="p3-out"></div>
+    </div>
+    <div class="hist-section">
+      <div class="hist-section-header">
+        <div class="hist-section-title">Run History</div>
+        <button class="hist-clear-btn" onclick="clearProgramHistory('p3')">Clear</button>
+      </div>
+      <div class="hist-empty" id="hist-p3-empty">No runs yet.</div>
+      <div class="hist-list" id="hist-p3-list"></div>
+    </div>
+  </div>
+
+  <!-- PROGRAM 4 -->
+  <div class="panel" id="p4">
+    <div class="panel-header">
+      <button class="back-btn" onclick="back()">← Menu</button>
+      <div class="panel-title"><span>Program 04</span>Collatz Sequence</div>
+    </div>
+    <div class="card">
+      <p class="note-inline">Finds all terms of the Collatz sequence. <em>Input must be a positive odd integer.</em></p>
+      <div class="field">
+        <label>Initial Value (positive odd integer)</label>
+        <input type="text" id="p4-input" placeholder="e.g. 13" inputmode="numeric" pattern="[0-9]*" maxlength="7" />
+      </div>
+      <div class="btn-row">
+        <button class="run-btn" onclick="runP4()">Run</button>
+        <button class="reset-btn" onclick="resetPanel('p4-input','p4-out')">↺ Reset</button>
+      </div>
+      <div class="output" id="p4-out"></div>
+    </div>
+    <div class="hist-section">
+      <div class="hist-section-header">
+        <div class="hist-section-title">Run History</div>
+        <button class="hist-clear-btn" onclick="clearProgramHistory('p4')">Clear</button>
+      </div>
+      <div class="hist-empty" id="hist-p4-empty">No runs yet.</div>
+      <div class="hist-list" id="hist-p4-list"></div>
+    </div>
+  </div>
+
+  <!-- PROGRAM 5 -->
+  <div class="panel" id="p5">
+    <div class="panel-header">
+      <button class="back-btn" onclick="backToRecursions()">← Recursions</button>
+      <div class="panel-title"><span>Program 05</span>Fibonacci Numbers</div>
+    </div>
+    <div class="card">
+      <div class="description-box">
+        <strong>The Fibonacci Numbers</strong><br>
+        The Fibonacci Numbers F<sub>n</sub> have the initial values
+        <span class="formula-line">F<sub>0</sub> = 0, F<sub>1</sub> = 1</span>
+        <strong>And the recursion:</strong>
+        <span class="formula-line">F<sub>n</sub> = F<sub>n-1</sub> + F<sub>n-2</sub></span>
+        If n &ge; 2. Valid input: 3 to 500 terms.
+      </div>
+      <div class="field">
+        <label>Number of Terms (3 to 500)</label>
+        <input type="text" id="p5-input" placeholder="e.g. 5" inputmode="numeric" pattern="[0-9]*" maxlength="3" />
+      </div>
+      <div class="btn-row">
+        <button class="run-btn" onclick="runP5()">Run</button>
+        <button class="reset-btn" onclick="resetPanel('p5-input','p5-out')">↺ Reset</button>
+      </div>
+      <div class="output" id="p5-out"></div>
+    </div>
+    <div class="hist-section">
+      <div class="hist-section-header">
+        <div class="hist-section-title">Run History</div>
+        <button class="hist-clear-btn" onclick="clearProgramHistory('p5')">Clear</button>
+      </div>
+      <div class="hist-empty" id="hist-p5-empty">No runs yet.</div>
+      <div class="hist-list" id="hist-p5-list"></div>
+    </div>
+  </div>
+
+  <!-- PROGRAM 6 -->
+  <div class="panel" id="p6">
+    <div class="panel-header">
+      <button class="back-btn" onclick="backToRecursions()">← Recursions</button>
+      <div class="panel-title"><span>Program 06</span>Lucas Numbers</div>
+    </div>
+    <div class="card">
+      <div class="description-box">
+        <strong>Lucas Numbers</strong><br>
+        The Lucas Numbers L<sub>n</sub> have the initial values
+        <span class="formula-line">L<sub>0</sub> = 2, L<sub>1</sub> = 1</span>
+        <strong>And the recursion:</strong>
+        <span class="formula-line">L<sub>n</sub> = L<sub>n-1</sub> + L<sub>n-2</sub></span>
+        If n &ge; 2. Valid input: 3 to 500 terms.
+      </div>
+      <div class="field">
+        <label>Number of Terms (3 to 500)</label>
+        <input type="text" id="p6-input" placeholder="e.g. 5" inputmode="numeric" pattern="[0-9]*" maxlength="3" />
+      </div>
+      <div class="btn-row">
+        <button class="run-btn" onclick="runP6()">Run</button>
+        <button class="reset-btn" onclick="resetPanel('p6-input','p6-out')">↺ Reset</button>
+      </div>
+      <div class="output" id="p6-out"></div>
+    </div>
+    <div class="hist-section">
+      <div class="hist-section-header">
+        <div class="hist-section-title">Run History</div>
+        <button class="hist-clear-btn" onclick="clearProgramHistory('p6')">Clear</button>
+      </div>
+      <div class="hist-empty" id="hist-p6-empty">No runs yet.</div>
+      <div class="hist-list" id="hist-p6-list"></div>
+    </div>
+  </div>
+
+  <!-- PROGRAM 7 -->
+  <div class="panel" id="p7">
+    <div class="panel-header">
+      <button class="back-btn" onclick="backToRecursions()">← Recursions</button>
+      <div class="panel-title"><span>Program 07</span>Tribonacci Numbers</div>
+    </div>
+    <div class="card">
+      <div class="description-box">
+        <strong>The Tribonacci Number</strong><br>
+        The Tribonacci Numbers T<sub>n</sub> have the initial values
+        <span class="formula-line">T<sub>0</sub> = 0, T<sub>1</sub> = 0, T<sub>2</sub> = 1</span>
+        <strong>And the recursion:</strong>
+        <span class="formula-line">T<sub>n</sub> = T<sub>n-1</sub> + T<sub>n-2</sub> + T<sub>n-3</sub></span>
+        If n &ge; 3. Valid input: 4 to 500 terms.
+      </div>
+      <div class="field">
+        <label>Number of Terms (4 to 500)</label>
+        <input type="text" id="p7-input" placeholder="e.g. 10" inputmode="numeric" pattern="[0-9]*" maxlength="3" />
+      </div>
+      <div class="btn-row">
+        <button class="run-btn" onclick="runP7()">Run</button>
+        <button class="reset-btn" onclick="resetPanel('p7-input','p7-out')">↺ Reset</button>
+      </div>
+      <div class="output" id="p7-out"></div>
+    </div>
+    <div class="hist-section">
+      <div class="hist-section-header">
+        <div class="hist-section-title">Run History</div>
+        <button class="hist-clear-btn" onclick="clearProgramHistory('p7')">Clear</button>
+      </div>
+      <div class="hist-empty" id="hist-p7-empty">No runs yet.</div>
+      <div class="hist-list" id="hist-p7-list"></div>
+    </div>
+  </div>
+
+  <!-- OVERALL HISTORY -->
+  <div class="panel" id="overall">
+    <div class="panel-header">
+      <button class="back-btn" onclick="back()">← Menu</button>
+      <div class="panel-title"><span>Overall History</span>All Program Runs</div>
+    </div>
+    <div class="card">
+      <div class="overall-filter">
+        <button class="filter-btn active" onclick="filterOverall('all',this)">All</button>
+        <button class="filter-btn" onclick="filterOverall('p1',this)">P1 Palindrome</button>
+        <button class="filter-btn" onclick="filterOverall('p2',this)">P2 Division</button>
+        <button class="filter-btn" onclick="filterOverall('p3',this)">P3 GCD/LCM</button>
+        <button class="filter-btn" onclick="filterOverall('p4',this)">P4 Collatz</button>
+        <button class="filter-btn" onclick="filterOverall('p5',this)">P5 Fibonacci</button>
+        <button class="filter-btn" onclick="filterOverall('p6',this)">P6 Lucas</button>
+        <button class="filter-btn" onclick="filterOverall('p7',this)">P7 Tribonacci</button>
+        <button class="filter-btn" onclick="filterOverall('ok',this)" style="color:var(--success);">✓ OK</button>
+        <button class="filter-btn" onclick="filterOverall('err',this)" style="color:var(--error);">✕ Errors</button>
+        <button class="overall-clear-all" onclick="clearAllHistory()">Clear All</button>
+      </div>
+      <div id="overall-empty" class="hist-empty">No runs recorded yet. Run a program first!</div>
+      <div class="overall-list" id="overall-list"></div>
+    </div>
+  </div>
+
+  <!-- EXIT -->
+  <div class="panel" id="exit">
+    <div class="exit-screen">
+      <h2>Program Exited</h2>
+      <p>Thank you for using Group 10's FINAL PROJECT IN AUTOMATA.</p>
+      <button class="run-btn" onclick="back()" style="background:var(--surface);border:1px solid var(--border);color:var(--text);margin-top:24px;">← Return to Menu</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const PROG_NAMES = {
+  p1:'Palindrome', p2:'Division', p3:'GCD/LCM',
+  p4:'Collatz', p5:'Fibonacci', p6:'Lucas', p7:'Tribonacci'
+};
+
+const history = { p1:[], p2:[], p3:[], p4:[], p5:[], p6:[], p7:[] };
+const MAX_SAFE_INPUT = Number.MAX_SAFE_INTEGER;
+const MAX_STRING_LENGTH = 200;
+const MAX_SEQUENCE_TERMS = 500;
+const MAX_COLLATZ_START = 1000000;
+let runCounter = 0;
+let currentOverallFilter = 'all';
+
+function timestamp() {
+  const d = new Date(), z = n => String(n).padStart(2,'0');
+  return `${z(d.getHours())}:${z(d.getMinutes())}:${z(d.getSeconds())}`;
+}
+
+function addHistory(progId, inputPreview, htmlOutput, isErr) {
+  runCounter++;
+  history[progId].unshift({ id: runCounter, time: timestamp(), inputPreview, htmlOutput, isErr });
+  renderProgramHistory(progId);
+  renderOverallHistory();
+  updateBadges();
+}
+
+function renderProgramHistory(progId) {
+  const list  = document.getElementById(`hist-${progId}-list`);
+  const empty = document.getElementById(`hist-${progId}-empty`);
+  const items = history[progId];
+  if (!items.length) { empty.style.display = 'block'; list.innerHTML = ''; return; }
+  empty.style.display = 'none';
+  list.innerHTML = items.map((e, idx) => `
+    <div class="hist-item" id="hi-${progId}-${e.id}">
+      <div class="hist-item-header" onclick="toggleItem('hi-${progId}-${e.id}')">
+        <div class="hist-item-meta">
+          <span class="hist-run-num">RUN #${items.length - idx}</span>
+          <span class="hist-input-preview">${escHtml(e.inputPreview)}</span>
+        </div>
+        <span class="hist-status ${e.isErr ? 's-err':'s-ok'}">${e.isErr ? '✕ ERROR' : '✓ OK'}</span>
+        <span class="hist-time">${e.time}</span>
+        <span class="hist-chevron">▼</span>
+      </div>
+      <div class="hist-item-body">${e.htmlOutput}</div>
+    </div>
+  `).join('');
+}
+
+function renderOverallHistory() {
+  const list  = document.getElementById('overall-list');
+  const empty = document.getElementById('overall-empty');
+  let all = [];
+  for (const pid of Object.keys(history))
+    history[pid].forEach(e => all.push({ ...e, progId: pid }));
+  all.sort((a,b) => b.id - a.id);
+  let filtered = all;
+  if      (currentOverallFilter === 'ok')  filtered = all.filter(e => !e.isErr);
+  else if (currentOverallFilter === 'err') filtered = all.filter(e =>  e.isErr);
+  else if (currentOverallFilter !== 'all') filtered = all.filter(e => e.progId === currentOverallFilter);
+  if (!filtered.length) { empty.style.display = 'block'; list.innerHTML = ''; return; }
+  empty.style.display = 'none';
+  list.innerHTML = filtered.map(e => `
+    <div class="overall-item" id="oi-${e.progId}-${e.id}">
+      <div class="overall-item-header" onclick="toggleItem('oi-${e.progId}-${e.id}')">
+        <div class="overall-item-left">
+          <span class="prog-tag">${PROG_NAMES[e.progId]}</span>
+          <span class="hist-input-preview">${escHtml(e.inputPreview)}</span>
+        </div>
+        <span class="hist-status ${e.isErr ? 's-err':'s-ok'}">${e.isErr ? '✕ ERROR' : '✓ OK'}</span>
+        <span class="hist-time">${e.time}</span>
+        <span class="hist-chevron">▼</span>
+      </div>
+      <div class="overall-item-body">${e.htmlOutput}</div>
+    </div>
+  `).join('');
+}
+
+function filterOverall(val, btn) {
+  currentOverallFilter = val;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderOverallHistory();
+}
+
+function toggleItem(id) { document.getElementById(id).classList.toggle('open'); }
+
+function updateBadges() {
+  for (const pid of Object.keys(history)) {
+    const badge = document.getElementById(`badge-${pid}`);
+    const count = history[pid].length;
+    badge.textContent = count;
+    badge.classList.toggle('visible', count > 0);
+  }
+  const recursionTotal = history.p5.length + history.p6.length + history.p7.length;
+  const rb = document.getElementById('badge-recursions');
+  rb.textContent = recursionTotal;
+  rb.classList.toggle('visible', recursionTotal > 0);
+  const total = Object.values(history).reduce((s,a) => s + a.length, 0);
+  const ob = document.getElementById('badge-overall');
+  ob.textContent = total;
+  ob.classList.toggle('visible', total > 0);
+}
+
+function clearProgramHistory(progId) {
+  history[progId] = [];
+  renderProgramHistory(progId);
+  renderOverallHistory();
+  updateBadges();
+}
+
+function clearAllHistory() {
+  for (const pid of Object.keys(history)) history[pid] = [];
+  for (const pid of Object.keys(history)) renderProgramHistory(pid);
+  renderOverallHistory();
+  updateBadges();
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function validatePositiveInteger(raw, outId, progId, preview, label, options = {}) {
+  const min = options.min ?? 1;
+  const max = options.max ?? MAX_SAFE_INPUT;
+  if (!raw) {
+    setOut(outId, err(`Please enter ${label}.`), progId, preview, true);
+    return null;
+  }
+  if (!/^(0|[1-9]\d*)$/.test(raw)) {
+    setOut(outId, err('Input must be a positive integer using digits only. No decimals, negatives, spaces, symbols, or leading zeros.'), progId, preview, true);
+    return null;
+  }
+  const n = Number(raw);
+  if (!Number.isSafeInteger(n)) {
+    setOut(outId, err(`Input is too large. Maximum allowed value is ${max}.`), progId, preview, true);
+    return null;
+  }
+  if (n < min) {
+    setOut(outId, err(`INVALID INPUT — ${label} must be at least ${min}.`), progId, preview, true);
+    return null;
+  }
+  if (n > max) {
+    setOut(outId, err(`INVALID INPUT — ${label} must not exceed ${max}.`), progId, preview, true);
+    return null;
+  }
+  return n;
+}
+
+function show(id) {
+  document.getElementById('main-menu').style.display = 'none';
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (id === 'overall') renderOverallHistory();
+}
+
+function back() {
+  document.querySelectorAll('.panel input').forEach(el => { el.value=''; });
+  document.querySelectorAll('.panel .output').forEach(el => { el.innerHTML=''; el.classList.remove('show'); });
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('main-menu').style.display = 'grid';
+}
+
+function backToRecursions() {
+  document.querySelectorAll('.panel.active input').forEach(el => { el.value=''; });
+  document.querySelectorAll('.panel.active .output').forEach(el => { el.innerHTML=''; el.classList.remove('show'); });
+  show('recursions');
+}
+
+function resetPanel(...ids) {
+  const outId = ids[ids.length - 1];
+  for (let i = 0; i < ids.length - 1; i++) {
+    const el = document.getElementById(ids[i]);
+    if (el) el.value = '';
+  }
+  const out = document.getElementById(outId);
+  if (out) { out.innerHTML = ''; out.classList.remove('show'); }
+  const first = document.getElementById(ids[0]);
+  if (first) first.focus();
+}
+
+function setOut(outId, html, progId, inputPreview, isErr) {
+  const el = document.getElementById(outId);
+  el.innerHTML = html;
+  el.classList.add('show');
+  addHistory(progId, inputPreview, html, isErr);
+  const box = el.getBoundingClientRect();
+  if (box.width && box.height) {
+    const x = box.left + box.width / 2;
+    const y = box.top + Math.min(box.height / 2, 70);
+    isErr ? sparkleBurst(x, y, 8) : confettiBurst(x, y, 26);
+  }
+}
+
+function err(msg) { return `<span class="err">⚠ ${msg}</span>`; }
+function ok(msg)  { return `<span class="ok">${msg}</span>`; }
+function hi(msg)  { return `<span class="hi">${msg}</span>`; }
+function acc(msg) { return `<span class="acc">${msg}</span>`; }
+
+function runP1() {
+  const raw = document.getElementById('p1-input').value;
+  const trimmed = raw.trim();
+  const preview = trimmed ? `"${raw}"` : '(empty)';
+  if (trimmed.length === 0) { setOut('p1-out', err('Please enter a non-space string.'), 'p1', preview, true); return; }
+  if (raw.length > MAX_STRING_LENGTH) { setOut('p1-out', err(`Input is too long. Maximum allowed length is ${MAX_STRING_LENGTH} characters.`), 'p1', preview, true); return; }
+  if (/[\x00-\x1F\x7F]/.test(raw)) { setOut('p1-out', err('Control characters are not allowed.'), 'p1', preview, true); return; }
+  let length = 0;
+  for (let i = 0; raw[i] !== undefined; i++) length++;
+  let cleaned = '';
+  for (let i = 0; i < length; i++) {
+    const ch = raw[i];
+    if (ch === ' ') continue;
+    const code = ch.charCodeAt(0);
+    cleaned += (code >= 65 && code <= 90) ? String.fromCharCode(code + 32) : ch;
+  }
+  let cLen = 0;
+  for (let i = 0; cleaned[i] !== undefined; i++) cLen++;
+  let isPalin = true;
+  for (let i = 0; i < Math.floor(cLen / 2); i++) {
+    if (cleaned[i] !== cleaned[cLen - 1 - i]) { isPalin = false; break; }
+  }
+  if (cLen === 0) { setOut('p1-out', err('Please enter at least one non-space character.'), 'p1', preview, true); return; }
+  const display = escHtml(raw);
+  const verdict = isPalin
+    ? ok(`"${display}" is a PALINDROME.`)
+    : `<span class="err">"${display}" is NOT a palindrome.</span>`;
+  const h = `The string is: ${hi('"'+display+'"')}\nLength of string: ${hi(length)}\n${verdict}`;
+  setOut('p1-out', h, 'p1', preview, false);
+}
+
+function runP2() {
+  const aRaw = document.getElementById('p2-a').value.trim();
+  const bRaw = document.getElementById('p2-b').value.trim();
+  const preview = `${aRaw||'?'}, ${bRaw||'?'}`;
+  if (!aRaw || !bRaw) { setOut('p2-out', err('Both fields are required.'), 'p2', preview, true); return; }
+  const a = validatePositiveInteger(aRaw, 'p2-out', 'p2', preview, 'the first integer');
+  if (a === null) return;
+  const b = validatePositiveInteger(bRaw, 'p2-out', 'p2', preview, 'the second integer');
+  if (b === null) return;
+  if (a === b) { setOut('p2-out', err('Both integers must be different.'), 'p2', preview, true); return; }
+  let m = a > b ? a : b, n = a > b ? b : a;
+  const q = Math.floor(m / n), r = m - n * q;
+  const sol = r === 0 ? `${m} = ${n}(${q}) + 0` : `${m} = ${n}(${q}) + ${r}`;
+  const h = `SOLUTION:\n${hi(sol+'\n\n')}The dividend is ${acc(m)}\nThe divisor is ${acc(n)}\nThe quotient is ${acc(q)} and the remainder is ${acc(r)}`;
+  setOut('p2-out', h, 'p2', preview, false);
+}
+
+function runP3() {
+  const aRaw = document.getElementById('p3-a').value.trim();
+  const bRaw = document.getElementById('p3-b').value.trim();
+  const preview = `${aRaw||'?'}, ${bRaw||'?'}`;
+  if (!aRaw || !bRaw) { setOut('p3-out', err('Both fields are required.'), 'p3', preview, true); return; }
+  const a = validatePositiveInteger(aRaw, 'p3-out', 'p3', preview, 'the first integer');
+  if (a === null) return;
+  const b = validatePositiveInteger(bRaw, 'p3-out', 'p3', preview, 'the second integer');
+  if (b === null) return;
+  if (a === b) { setOut('p3-out', err('Both integers must be different.'), 'p3', preview, true); return; }
+  let m = a > b ? a : b, n = a > b ? b : a;
+  let steps = [], cm = m, cn = n;
+  while (true) {
+    const q = Math.floor(cm / cn), r = cm - cn * q;
+    if (r === 0) { steps.push(`${cm} = ${cn}(${q})`); break; }
+    steps.push(`${cm} = ${cn}(${q}) + ${r}`);
+    cm = cn; cn = r;
+  }
+  const gcd = cn, lcm = ((BigInt(m) * BigInt(n)) / BigInt(gcd)).toString();
+  const h = `SOLUTION:\n${hi(steps.join('\n'))}\n\nThe integers are ${acc(m)} and ${acc(n)}\nThe GCD of ${m} and ${n} is ${ok(gcd)}\nThe LCM of ${m} and ${n} is ${ok(lcm)}.`;
+  setOut('p3-out', h, 'p3', preview, false);
+}
+
+function runP4() {
+  const raw = document.getElementById('p4-input').value.trim();
+  const preview = raw || '(empty)';
+  const n = validatePositiveInteger(raw, 'p4-out', 'p4', preview, 'a starting value', { max: MAX_COLLATZ_START });
+  if (n === null) return;
+  if (n % 2 === 0) { setOut('p4-out', err('INVALID INPUT — Value must be an odd integer.'), 'p4', preview, true); return; }
+  let seq = [n], cur = n, safety = 0;
+  while (cur !== 1) {
+    cur = cur % 2 !== 0 ? 3 * cur + 1 : Math.floor(cur / 2);
+    seq.push(cur);
+    if (++safety > 100000) { setOut('p4-out', err('Sequence too long to display.'), 'p4', preview, true); return; }
+  }
+  const h = `This program will find all the terms of the Collatz sequence.\n\nThe Collatz sequence for ${hi(n)} are:\n${ok(seq.join(', '))}`;
+  setOut('p4-out', h, 'p4', preview, false);
+}
+
+function runP5() {
+  const raw = document.getElementById('p5-input').value.trim();
+  const preview = raw ? `n=${raw}` : '(empty)';
+  const n = validatePositiveInteger(raw, 'p5-out', 'p5', preview, 'the number of terms', { min: 3, max: MAX_SEQUENCE_TERMS });
+  if (n === null) return;
+  let seq = [], a = 0n, b = 1n;
+  for (let i = 0; i < n; i++) { seq.push(a.toString()); let t=a+b; a=b; b=t; }
+  const h = `This program will find all the terms of the Fibonacci numbers.\n\nThe Fibonacci numbers are:\n${ok(seq.join(', '))}`;
+  setOut('p5-out', h, 'p5', preview, false);
+}
+
+function runP6() {
+  const raw = document.getElementById('p6-input').value.trim();
+  const preview = raw ? `n=${raw}` : '(empty)';
+  const n = validatePositiveInteger(raw, 'p6-out', 'p6', preview, 'the number of terms', { min: 3, max: MAX_SEQUENCE_TERMS });
+  if (n === null) return;
+  let seq = [], a = 2n, b = 1n;
+  
+  for (let i = 0; i < n; i++) { seq.push(a.toString()); let t=a+b; a=b; b=t; }
+  const h = `This program will find all the terms of the Lucas numbers.\n\nThe Lucas numbers are:\n${ok(seq.join(', '))}`;
+  setOut('p6-out', h, 'p6', preview, false);
+}
+
+function runP7() {
+  const raw = document.getElementById('p7-input').value.trim();
+  const preview = raw ? `n=${raw}` : '(empty)';
+  const n = validatePositiveInteger(raw, 'p7-out', 'p7', preview, 'the number of terms', { min: 4, max: MAX_SEQUENCE_TERMS });
+  if (n === null) return;
+  let seq = [0n,0n,1n];
+  for (let i = 3; i < n; i++) seq.push(seq[i-1]+seq[i-2]+seq[i-3]);
+  const h = `This program will find all the terms of the Tribonacci numbers.\n\nThe Tribonacci numbers are:\n${ok(seq.join(', '))}`;
+  setOut('p7-out', h, 'p7', preview, false);
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key !== 'Enter') return;
+  const active = document.querySelector('.panel.active');
+  if (!active) return;
+  const map = { p1:runP1, p2:runP2, p3:runP3, p4:runP4, p5:runP5, p6:runP6, p7:runP7 };
+  if (map[active.id]) map[active.id]();
+});
+
+const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sparkleLayer = document.getElementById('sparkle-layer');
+const partyColors = ['#f0396e', '#7c3aed', '#16a34a', '#fbbf24', '#06b6d4', '#ffffff'];
+let lastTrailTime = 0;
+
+function spawnParticle(x, y, className, burst = false) {
+  if (!motionOK || !sparkleLayer) return;
+  const p = document.createElement('span');
+  p.className = className;
+  p.style.left = `${x}px`;
+  p.style.top = `${y}px`;
+  if (burst) {
+    p.style.setProperty('--sx', `${Math.random() * 70 - 35}px`);
+    p.style.setProperty('--sy', `${Math.random() * 70 - 35}px`);
+  }
+  sparkleLayer.appendChild(p);
+  p.addEventListener('animationend', () => p.remove(), { once: true });
+}
+
+function sparkleBurst(x, y, count = 7) {
+  for (let i = 0; i < count; i++) spawnParticle(x, y, 'sparkle', true);
+}
+
+function confettiBurst(x, y, count = 24) {
+  if (!motionOK || !sparkleLayer) return;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('span');
+    const angle = (Math.PI * 2 * i) / count + Math.random() * 0.45;
+    const distance = 55 + Math.random() * 115;
+    p.className = 'confetti';
+    p.style.left = `${x}px`;
+    p.style.top = `${y}px`;
+    p.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
+    p.style.setProperty('--ty', `${Math.sin(angle) * distance + 35}px`);
+    p.style.setProperty('--rot', `${Math.random() * 720 - 360}deg`);
+    p.style.setProperty('--c', partyColors[i % partyColors.length]);
+    sparkleLayer.appendChild(p);
+    p.addEventListener('animationend', () => p.remove(), { once: true });
+  }
+}
+
+function firework(x, y, count = 20) {
+  if (!motionOK || !sparkleLayer) return;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('span');
+    const angle = (Math.PI * 2 * i) / count;
+    const distance = 34 + Math.random() * 52;
+    p.className = 'firework';
+    p.style.left = `${x}px`;
+    p.style.top = `${y}px`;
+    p.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
+    p.style.setProperty('--ty', `${Math.sin(angle) * distance}px`);
+    p.style.setProperty('--c', partyColors[i % partyColors.length]);
+    sparkleLayer.appendChild(p);
+    p.addEventListener('animationend', () => p.remove(), { once: true });
+  }
+}
+
+function ambientSparkle() {
+  if (!motionOK || !sparkleLayer) return;
+  const p = document.createElement('span');
+  p.className = 'ambient-star';
+  p.style.left = `${Math.random() * window.innerWidth}px`;
+  p.style.top = `${window.innerHeight - 20 + Math.random() * 80}px`;
+  sparkleLayer.appendChild(p);
+  p.addEventListener('animationend', () => p.remove(), { once: true });
+}
+
+document.addEventListener('pointermove', function(e) {
+  const now = performance.now();
+  if (now - lastTrailTime < 28) return;
+  lastTrailTime = now;
+  spawnParticle(e.clientX, e.clientY, 'trail-dot');
+  if (Math.random() > 0.72) spawnParticle(e.clientX, e.clientY, 'sparkle', true);
+});
+
+document.addEventListener('click', function(e) {
+  sparkleBurst(e.clientX, e.clientY, 12);
+  firework(e.clientX, e.clientY, 18);
+});
+
+document.querySelectorAll('.menu-btn, .run-btn, .reset-btn, .back-btn, .filter-btn').forEach(btn => {
+  btn.addEventListener('pointerenter', function(e) {
+    const r = btn.getBoundingClientRect();
+    sparkleBurst(r.left + r.width / 2, r.top + r.height / 2, 5);
+    firework(r.left + r.width / 2, r.top + r.height / 2, 8);
+  });
+});
+
+if (motionOK) setInterval(ambientSparkle, 420);
+</script>
+</body>
+</html>
