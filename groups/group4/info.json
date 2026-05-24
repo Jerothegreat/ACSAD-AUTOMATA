@@ -1,0 +1,70 @@
+{
+  "group": "Group 4",
+  "members": [
+    "Cawas",
+    "Daos",
+    "Reyes",
+    "Villaruz"
+  ],
+  "download": "G4_AUTOMATA-ALGO.zip",
+  "labacts": [
+    {
+      "name": "Division Algorithm",
+      "file": "DivisionAlgorithm_CawasDaosReyesVillaruz.js",
+      "description": "Computes quotient and remainder for two positive integers using the division algorithm.",
+      "inputs": [
+        { "label": "Enter the first positive integer:", "placeholder": "e.g. 21" },
+        { "label": "Enter the second positive integer:", "placeholder": "e.g. 4" }
+      ]
+    },
+    {
+      "name": "Euclidean",
+      "file": "Euclidean_CawasDaosReyesVillaruz.js",
+      "description": "Finds GCD and LCM of two positive integers using the Euclidean algorithm.",
+      "inputs": [
+        { "label": "Enter the first positive integer:", "placeholder": "e.g. 56" },
+        { "label": "Enter the second positive integer:", "placeholder": "e.g. 98" }
+      ]
+    },
+    {
+      "name": "Collatz Sequence",
+      "file": "Collatz_CawasDaosReyesVillaruz.js",
+      "description": "Generates the Collatz sequence from a positive odd integer until it reaches 1.",
+      "inputs": [
+        { "label": "Input the initial value:", "placeholder": "positive odd integer" }
+      ]
+    },
+    {
+      "name": "Fibonacci",
+      "file": "Fibonacci_CawasDaosReyesVillaruz.js",
+      "description": "Displays the Fibonacci sequence up to n terms where n is greater than 2.",
+      "inputs": [
+        { "label": "Input the number of terms:", "placeholder": "integer greater than 2" }
+      ]
+    },
+    {
+      "name": "Lucas",
+      "file": "Lucas_CawasDaosReyesVillaruz.js",
+      "description": "Displays the Lucas sequence up to n terms where n is greater than 2.",
+      "inputs": [
+        { "label": "Input the number of terms:", "placeholder": "integer greater than 2" }
+      ]
+    },
+    {
+      "name": "Tribonacci",
+      "file": "Tribonacci_CawasDaosReyesVillaruz.js",
+      "description": "Displays the Tribonacci sequence up to n terms where n is greater than 3.",
+      "inputs": [
+        { "label": "Input the number of terms:", "placeholder": "integer greater than 3" }
+      ]
+    },
+    {
+      "name": "Palindrome",
+      "file": "Palindrome_CawasDaosReyesVillaruz.js",
+      "description": "Checks whether a string is a palindrome, counting symbols, numbers, and spaces.",
+      "inputs": [
+        { "label": "Enter a string:", "placeholder": "e.g. A man, a plan, a canal" }  
+      ]
+    }
+  ]
+}
