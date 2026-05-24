@@ -282,6 +282,7 @@ body.sidebar-open .app-shell {
   background: transparent;
   color: var(--sidebar-ink);
   cursor: pointer;
+  text-decoration: none;
   text-align: left;
   transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
 }
@@ -321,6 +322,26 @@ body.sidebar-open .app-shell {
 
 .group-btn.active {
   box-shadow: inset 0 0 0 1px rgba(147, 242, 242, 0.12);
+}
+
+.group-btn--external {
+  border-style: dashed;
+  border-color: rgba(147, 242, 242, 0.28);
+}
+
+.external-badge {
+  margin-left: auto;
+  padding: 3px 6px;
+  border-radius: var(--radius-pill);
+  background: rgba(147, 242, 242, 0.12);
+  color: var(--primary-fixed);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: opacity var(--transition-fast), max-width var(--transition-base), margin var(--transition-base), padding var(--transition-base);
 }
 
 .sidebar-overlay {
@@ -690,11 +711,13 @@ body:not(.sidebar-open) .brand-mark {
 body:not(.sidebar-open) .brand-copy,
 body:not(.sidebar-open) .sidebar-intro,
 body:not(.sidebar-open) .sidebar-section,
-body:not(.sidebar-open) .group-btn-text {
+body:not(.sidebar-open) .group-btn-text,
+body:not(.sidebar-open) .external-badge {
   opacity: 0;
   max-width: 0;
   overflow: hidden;
   margin: 0;
+  padding: 0;
   pointer-events: none;
 }
 

@@ -1,6 +1,21 @@
 const GROUP_COUNT = 11;
 const PISTON_ENDPOINT = "https://emkc.org/api/v2/piston/execute";
 
+const EXTERNAL_GROUP_URLS = {
+  2: "https://group2-automata.vercel.app/",
+  10: "https://group11-finals-automata.netlify.app/",
+};
+
+const GROUPS = Array.from({ length: GROUP_COUNT }, (_, index) => {
+  const number = index + 1;
+
+  return {
+    number,
+    name: `Group ${number}`,
+    externalUrl: EXTERNAL_GROUP_URLS[number] || "",
+  };
+});
+
 const state = {
   currentGroupNumber: 1,
   currentGroup: null,
@@ -163,31 +178,52 @@ function setGroupContentScope(groupNumber) {
 function renderGroupButtons() {
   elements.groupList.innerHTML = "";
 
-  for (let groupNumber = 1; groupNumber <= GROUP_COUNT; groupNumber += 1) {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "group-btn";
+  for (const group of GROUPS) {
+    const button = group.externalUrl ? document.createElement("a") : document.createElement("button");
+    const groupNumber = group.number;
+
+    if (group.externalUrl) {
+      button.href = group.externalUrl;
+      button.target = "_blank";
+      button.rel = "noopener noreferrer";
+      button.className = "group-btn group-btn--external";
+      button.dataset.external = "true";
+      button.setAttribute("aria-label", `Open ${group.name} external site in a new tab`);
+    } else {
+      button.type = "button";
+      button.className = "group-btn";
+      button.addEventListener("click", () => {
+        loadGroup(groupNumber);
+        if (sidebarViewport.matches) {
+          setSidebarOpen(false);
+        }
+      });
+    }
+
     button.dataset.short = `G${groupNumber}`;
     button.dataset.group = String(groupNumber);
-    button.addEventListener("click", () => {
-      loadGroup(groupNumber);
-      if (sidebarViewport.matches) {
-        setSidebarOpen(false);
-      }
-    });
 
     const label = document.createElement("span");
     label.className = "group-btn-text";
-    label.textContent = `Group ${groupNumber}`;
+    label.textContent = group.name;
 
     button.appendChild(label);
+
+    if (group.externalUrl) {
+      const badge = document.createElement("span");
+      badge.className = "external-badge";
+      badge.textContent = "External";
+      button.appendChild(badge);
+    }
+
     elements.groupList.appendChild(button);
   }
 }
 
 function setActiveGroupButton(groupNumber) {
   document.querySelectorAll(".group-btn").forEach((button) => {
-    button.classList.toggle("active", Number(button.dataset.group) === groupNumber);
+    const isExternal = button.dataset.external === "true";
+    button.classList.toggle("active", !isExternal && Number(button.dataset.group) === groupNumber);
   });
 }
 
